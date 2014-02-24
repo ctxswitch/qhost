@@ -20,7 +20,7 @@ class TestParser(unittest.TestCase):
         self.assertEqual(n.uname, u'Linux n061.fortytwo.ibest.uidaho.edu 2.6.32-279.14.1.el6.x86_64 #1 SMP Tue Nov 6 23:43:09 UTC 2012 x86_64')
         self.assertEqual(n.os, u'linux')
         self.assertEqual(n.state, u'job-exclusive')
-        self.assertEqual(n.sessions, 17922)
+        self.assertEqual(n.sessions, [17922])
         self.assertEqual(n.nsessions, 1)
         self.assertEqual(n.nusers, 1)
         self.assertEqual(n.physmem, 32941056)
@@ -46,7 +46,7 @@ class TestParser(unittest.TestCase):
         self.assertEqual(n.uname, u'Linux n061.fortytwo.ibest.uidaho.edu 2.6.32-279.14.1.el6.x86_64 #1 SMP Tue Nov 6 23:43:09 UTC 2012 x86_64')
         self.assertEqual(n.os, u'linux')
         self.assertEqual(n.state, u'job-exclusive')
-        self.assertEqual(n.sessions, 17922)
+        self.assertEqual(n.sessions, [17922])
         self.assertEqual(n.nsessions, 1)
         self.assertEqual(n.nusers, 1)
         self.assertEqual(n.physmem, 32941056)
@@ -68,7 +68,7 @@ class TestParser(unittest.TestCase):
         self.assertEqual(n.uname, u'Linux n062.fortytwo.ibest.uidaho.edu 2.6.32-279.14.1.el6.x86_64 #1 SMP Tue Nov 6 23:43:09 UTC 2012 x86_64')
         self.assertEqual(n.os, u'linux')
         self.assertEqual(n.state, u'job-exclusive')
-        self.assertEqual(n.sessions, 8739)
+        self.assertEqual(n.sessions, [8739])
         self.assertEqual(n.nsessions, 1)
         self.assertEqual(n.nusers, 1)
         self.assertEqual(n.physmem, 32941056)
@@ -89,7 +89,7 @@ class TestParser(unittest.TestCase):
         nlist = p.parse()
 
         n = nlist[0]
-        self.assertEqual(n.sessions, 0)
+        self.assertEqual(n.sessions, [])
         self.assertEqual(n.nsessions, 0)
 
 if __name__ == '__main__':

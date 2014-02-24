@@ -48,15 +48,24 @@ class Parser:
         node = Node(name)
         node.procs = procs
         node.state = state
-        node.physmem = status['physmem']
-        node.availmem = status['availmem']
-        node.totmem = status['totmem']
-        node.nusers = status['nusers']
-        node.sessions = status['sessions']
-        node.nsessions = status['nsessions']
-        node.loadave = status['loadave']
-        node.uname = status['uname']
-        node.os = status['os']
+        if 'physmem' in status:
+            node.physmem = status['physmem']
+        if 'availmem' in status:
+            node.availmem = status['availmem']
+        if 'totmem' in status:
+            node.totmem = status['totmem']
+        if 'nusers' in status:
+            node.nusers = status['nusers']
+        if 'sessions' in status:
+            node.sessions = status['sessions']
+        if 'nsessions' in status:
+            node.nsessions = status['nsessions']
+        if 'loadave' in status:
+            node.loadave = status['loadave']
+        if 'uname' in status:
+            node.uname = status['uname']
+        if 'os' in status:
+            node.os = status['os']
         node.jobs = jobs
         return node
 
@@ -77,21 +86,30 @@ class Parser:
             i = item.split('=')
             key = i[0]
             value = i[1]
-            if value and value[0] == '?':
-                value = '0'
-            d[key] = value
+            if value and not value[0] == '?':
+                d[key] = value
 
-        return {
-            'physmem': int(d['physmem'][:-2]),
-            'availmem': int(d['availmem'][:-2]),
-            'totmem': int(d['totmem'][:-2]),
-            'nusers': int(d['nusers']),
-            'sessions': map(lambda x: int(x), d['sessions'].split()),
-            'nsessions': int(d['nsessions']),
-            'loadave': float(d['loadave']),
-            'uname': d['uname'],
-            'os': d['opsys']
-        }
+        retval = {}
+        if 'sessions' in d:
+            retval['physmem'] = int(d['physmem'][:-2])
+        if 'availmem' in d:
+            retval['availmem'] = int(d['availmem'][:-2])
+        if 'totmem' in d:
+            retval['totmem'] = int(d['totmem'][:-2])
+        if 'nusers' in d:
+            retval['nusers'] = int(d['nusers'])
+        if 'sessions' in d:
+            retval['sessions'] = map(lambda x: int(x), d['sessions'].split())
+        if 'nsessions' in d:
+            retval['nsessions'] = int(d['nsessions'])
+        if 'loadave' in d:
+            retval['loadave'] = float(d['loadave'])
+        if 'uname' in d:
+            retval['uname'] = d['uname']
+        if 'opsys' in d:
+            retval['os'] = d['opsys']
+
+        return retval
 
     def handle_node_jobs(self, node):
         return self.getText(node.childNodes).split(', ')
