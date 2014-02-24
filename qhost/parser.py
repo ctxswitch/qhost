@@ -90,7 +90,7 @@ class Parser:
                 d[key] = value
 
         retval = {}
-        if 'sessions' in d:
+        if 'physmem' in d:
             retval['physmem'] = int(d['physmem'][:-2])
         if 'availmem' in d:
             retval['availmem'] = int(d['availmem'][:-2])
