@@ -2,7 +2,7 @@ qhost
 =====
 
 ## Description
-Sumarize pbsnodes output in a quick list.  For use with pbs batch systems, qhost works the same way as it's gridengine namesake.
+Gridengine qhost replacement for PBS based systems. Summarize pbsnodes output in a quick list. View execution node information such as processors, running jobs, memory stats, and state.
 
 ## Install
 
