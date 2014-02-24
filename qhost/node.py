@@ -18,7 +18,7 @@ class Node:
         self.name = name
         self.uname = ''
         self.state = ''
-        self.sessions = 0
+        self.sessions = []
         self.nsessions = 0
         self.nusers = 0
         self.physmem = 0

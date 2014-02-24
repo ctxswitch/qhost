@@ -86,7 +86,7 @@ class Parser:
             'availmem': int(d['availmem'][:-2]),
             'totmem': int(d['totmem'][:-2]),
             'nusers': int(d['nusers']),
-            'sessions': int(d['sessions']),
+            'sessions': map(lambda x: int(x), d['sessions'].split()),
             'nsessions': int(d['nsessions']),
             'loadave': float(d['loadave']),
             'uname': d['uname'],
