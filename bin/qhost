@@ -14,48 +14,48 @@
 # limitations under the License.
 import os
 import sys
-from optparse import OptionParser
+import argparse
 
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 
-def get_options():
-    parser = OptionParser()
-    parser.add_option(
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
         "-c", "--color",
         action="store_true", dest="color", default=False,
         help="turn on colorized output")
-    parser.add_option(
+    parser.add_argument(
         "-j", "--jobs",
         action="store_true", dest="jobs", default=False,
         help="show job information")
-    parser.add_option(
+    parser.add_argument(
         "-v", "--version",
         action="store_true", dest="version", default=False,
         help="Print version and exit.")
 
-    (options, args) = parser.parse_args()
+    args = parser.parse_args()
 
-    if options.version:
+    if args.version:
         print "qhost version", VERSION
         sys.exit(0)
 
-    return options
+    return args
 
-def run(options):
+def run(args):
     lib_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../')
     if lib_path not in sys.path:
         sys.path.insert(0, lib_path)
     import qhost
 
-    pbsnodes = qhost.Pbsnodes("/usr/bin/pbsnodes")
+    pbsnodes = qhost.Pbsnodes("pbsnodes")
     xml = pbsnodes.execute()
     qp = qhost.Parser(xml)
     nodes = qp.parse()
-    display = qhost.Display(color=options.color, showjobs=options.jobs)
+    display = qhost.Display(color=args.color, showjobs=args.jobs)
     display.list(nodes)
 
 def main():
-    run(get_options())    
+    run(get_args())    
 
 if __name__ == "__main__":
     main()
