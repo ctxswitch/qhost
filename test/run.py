@@ -21,6 +21,6 @@ if __name__ == '__main__':
     loader = unittest.TestLoader()
     results = unittest.TextTestRunner(verbosity=2).run(suite(loader))
     if results.wasSuccessful():
-	sys.exit(0)
+        sys.exit(0)
     else:
         sys.exit(1)
