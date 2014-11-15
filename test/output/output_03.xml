@@ -1,0 +1,2 @@
+<Data><Node><name>n001</name><state>offline</state><np>8</np><properties>compute,enc1</properties><ntype>cluster</ntype><status>rectime=1390362976,varattr=,jobs=,state=free,netload=18838668091,gres=,loadave=0.22,ncpus=8,physmem=32941056kb,availmem=33343196kb,totmem=35038200kb,idletime=972119,nusers=0,nsessions=? 0,sessions=? 0,uname=Linux n001.cluster.example.org 2.6.32-279.14.1.el6.x86_64 #1 SMP Tue Nov 6 23:43:09 UTC 2012 x86_64,opsys=linux</status><gpus>0</gpus></Node></Data>
+    
