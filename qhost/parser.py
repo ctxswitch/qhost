@@ -39,7 +39,12 @@ class Parser:
         name = self.handle_node_name(node.getElementsByTagName("name")[0])
         procs = self.handle_node_procs(node.getElementsByTagName("np")[0])
         state = self.handle_node_state(node.getElementsByTagName("state")[0])
-        status = self.handle_node_status(node.getElementsByTagName("status")[0])
+
+        try:
+          status = self.handle_node_status(node.getElementsByTagName("status")[0])
+        except:
+          status = ""
+
         if node.getElementsByTagName("jobs"):
             jobs = self.handle_node_jobs(node.getElementsByTagName("jobs")[0])
         else:
