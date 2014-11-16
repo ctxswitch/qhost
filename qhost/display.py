@@ -49,9 +49,6 @@ class Display:
             self.mem_out(node.availmem, pad=12),
             self.ratio(node.loadave, node.procs, pad=8),
             self.pad(node.state, 16)
-            #self.pad(node.physmem, 12, label='K'),
-            #self.pad(node.totmem, 12, label='K'),
-            #self.pad(node.availmem, 12, label='K'),
         )
         return line
 
@@ -61,7 +58,7 @@ class Display:
             line += " * %s\n" % (job)
         return self.out(line, color=Display.TEAL)
 
-    def out(self, msg, color=None, pad=0, label=None):
+    def out(self, msg, color=None, pad=0):
         if pad > 1:
             msg = self.pad(msg, pad)
 
@@ -70,7 +67,7 @@ class Display:
 
         return msg
 
-    def mem_out(self, msg, color=None, pad=0, label=None):
+    def mem_out(self, msg, color=None, pad=0):
 
         def sizeof_fmt(num):
             """ provide converted {''/K/.../Z}-byte and unit label """
@@ -83,9 +80,6 @@ class Display:
         if pad > 1:
             msg, unit = sizeof_fmt(int(msg) * 1024) # convert kilobyte to byte
             msg = self.pad(msg, pad, label=unit)
-
-        #if self.color and color is not None:
-        #    msg = self.colorize(msg, color)
 
         return msg
 
