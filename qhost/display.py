@@ -44,11 +44,14 @@ class Display:
             self.out(node.name, pad=16),
             self.out(node.procs, color=Display.BLUE, pad=4),
             self.ratio(len(node.jobs), node.procs, 4),
-            self.pad(node.physmem, 12, label='K'),
-            self.pad(node.totmem, 12, label='K'),
-            self.pad(node.availmem, 12, label='K'),
+            self.mem_out(node.physmem, pad=12),
+            self.mem_out(node.totmem, pad=12),
+            self.mem_out(node.availmem, pad=12),
             self.ratio(node.loadave, node.procs, pad=8),
             self.pad(node.state, 16)
+            #self.pad(node.physmem, 12, label='K'),
+            #self.pad(node.totmem, 12, label='K'),
+            #self.pad(node.availmem, 12, label='K'),
         )
         return line
 
@@ -64,6 +67,25 @@ class Display:
 
         if self.color and color is not None:
             msg = self.colorize(msg, color)
+
+        return msg
+
+    def mem_out(self, msg, color=None, pad=0, label=None):
+
+        def sizeof_fmt(num):
+            """ provide converted {''/K/.../Z}-byte and unit label """
+            for unit in ['','K','M','G','T','P','E','Z']:
+                if abs(num) < 1024.0:
+                    return "%3.2f" % num, unit
+                num /= 1024.0
+            return "%.2f" % num, 'Yi'
+
+        if pad > 1:
+            msg, unit = sizeof_fmt(int(msg) * 1024) # convert kilobyte to byte
+            msg = self.pad(msg, pad, label=unit)
+
+        #if self.color and color is not None:
+        #    msg = self.colorize(msg, color)
 
         return msg
 
