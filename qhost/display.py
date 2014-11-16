@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
 
 
 class Display:
@@ -63,9 +62,9 @@ class Display:
         if pad > 1:
             msg = self.pad(msg, pad)
 
-        if self.color and color != None:
+        if self.color and color is not None:
             msg = self.colorize(msg, color)
-        
+
         return msg
 
     def ratio(self, value, maxval, pad=0):
@@ -100,13 +99,13 @@ class Display:
 
     def colorize(self, msg, color):
         if color == Display.RED:
-            return "\033[31m%s\033[0m" %(msg)
+            return "\033[31m%s\033[0m" % (msg)
         elif color == Display.GREEN:
-            return "\033[1;32m%s\033[0m" %(msg)
+            return "\033[1;32m%s\033[0m" % (msg)
         elif color == Display.GRAY:
-            return "\033[1;30m%s\033[0m" %(msg)
+            return "\033[1;30m%s\033[0m" % (msg)
         elif color == Display.BLUE:
-            return "\033[1;34m%s\033[0m" %(msg)
+            return "\033[1;34m%s\033[0m" % (msg)
         elif color == Display.TEAL:
-            return "\033[36m%s\033[0m" %(msg)
+            return "\033[36m%s\033[0m" % (msg)
         return msg
