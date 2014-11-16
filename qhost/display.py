@@ -44,9 +44,9 @@ class Display:
             self.out(node.name, pad=16),
             self.out(node.procs, color=Display.BLUE, pad=4),
             self.ratio(len(node.jobs), node.procs, 4),
-            self.pad(node.physmem, 12, label='kb'),
-            self.pad(node.totmem, 12, label='kb'),
-            self.pad(node.availmem, 12, label='kb'),
+            self.pad(node.physmem, 12, label='K'),
+            self.pad(node.totmem, 12, label='K'),
+            self.pad(node.availmem, 12, label='K'),
             self.ratio(node.loadave, node.procs, pad=8),
             self.pad(node.state, 16)
         )
