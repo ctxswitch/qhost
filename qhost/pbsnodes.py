@@ -17,11 +17,16 @@ from commands import getstatusoutput
 class Pbsnodes:
     def __init__(self, binfile):
         self.binfile = binfile
+        self.errmsg = ""
 
     def execute(self):
         cmd = "%s -x" % (self.binfile)
         status, out = getstatusoutput(cmd)
         if status != 0:
+            self.errmsg = out
             return None
         else:
             return out
+
+    def error(self):
+        return self.errmsg
