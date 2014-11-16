@@ -33,7 +33,7 @@ class Display:
                 print self.joblines(node)
 
     def header(self):
-        line = "%-16s %-4s %-4s %-8s %-8s %-8s %-8s %-16s\n" % (
+        line = "%-16s %-4s %-4s %-12s %-12s %-12s %-8s %-16s\n" % (
             "Node", "CPUs", "Jobs", "Memory", "Total", "Avail", "Load", "State"
         )
         line += "-" * 80
@@ -44,9 +44,9 @@ class Display:
             self.out(node.name, pad=16),
             self.out(node.procs, color=Display.BLUE, pad=4),
             self.ratio(len(node.jobs), node.procs, 4),
-            self.pad(node.physmem, 8),
-            self.pad(node.totmem, 8),
-            self.pad(node.availmem, 8),
+            self.pad(node.physmem, 12, label='kb'),
+            self.pad(node.totmem, 12, label='kb'),
+            self.pad(node.availmem, 12, label='kb'),
             self.ratio(node.loadave, node.procs, pad=8),
             self.pad(node.state, 16)
         )
@@ -58,7 +58,7 @@ class Display:
             line += " * %s\n" % (job)
         return self.out(line, color=Display.TEAL)
 
-    def out(self, msg, color=None, pad=0):
+    def out(self, msg, color=None, pad=0, label=None):
         if pad > 1:
             msg = self.pad(msg, pad)
 
@@ -76,9 +76,15 @@ class Display:
 
         return value
 
-    def pad(self, msg, size):
+    def pad(self, msg, size, label=None):
         msg = str(msg)
-        return (msg + " " * (size - len(msg)))[0:size]
+
+        if label:
+            pad_msg = (msg + label +" " * (size - len(msg) - len(label)))[0:size]
+        else:
+            pad_msg = (msg + " " * (size - len(msg)))[0:size]
+
+        return pad_msg
 
     def colorize_ratio(self, value, maxval):
         # Get the percentage and return the string with the
