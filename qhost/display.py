@@ -71,14 +71,14 @@ class Display:
 
         def sizeof_fmt(num):
             """ provide converted {''/K/.../Z}-byte and unit label """
-            for unit in ['','K','M','G','T','P','E','Z']:
+            for unit in ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z']:
                 if abs(num) < 1024.0:
                     return "%3.2f" % num, unit
                 num /= 1024.0
             return "%.2f" % num, 'Yi'
 
         if pad > 1:
-            msg, unit = sizeof_fmt(int(msg) * 1024) # convert kilobyte to byte
+            msg, unit = sizeof_fmt(int(msg) * 1024)  # convert kilobyte to byte
             msg = self.pad(msg, pad, label=unit)
 
         return msg
@@ -96,7 +96,7 @@ class Display:
         msg = str(msg)
 
         if label:
-            pad_msg = (msg + label +" " * (size - len(msg) - len(label)))[0:size]
+            pad_msg = (msg + label + " " * (size - len(msg) - len(label)))[0:size]
         else:
             pad_msg = (msg + " " * (size - len(msg)))[0:size]
 
