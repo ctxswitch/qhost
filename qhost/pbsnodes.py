@@ -23,10 +23,10 @@ class Pbsnodes:
         cmd = "%s -x" % (self.binfile)
         status, out = getstatusoutput(cmd)
         if status != 0:
-        	self.errmsg = out
+            self.errmsg = out
             return None
         else:
             return out
 
-	def error(self):
-		return self.errmsg
+    def error(self):
+        return self.errmsg
