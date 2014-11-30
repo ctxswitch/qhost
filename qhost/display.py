@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
 
 
 class Display:
@@ -34,7 +33,7 @@ class Display:
                 print self.joblines(node)
 
     def header(self):
-        line = "%-16s %-4s %-4s %-8s %-8s %-8s %-8s %-16s\n" % (
+        line = "%-16s %-4s %-4s %-12s %-12s %-12s %-8s %-16s\n" % (
             "Node", "CPUs", "Jobs", "Memory", "Total", "Avail", "Load", "State"
         )
         line += "-" * 80
@@ -45,9 +44,9 @@ class Display:
             self.out(node.name, pad=16),
             self.out(node.procs, color=Display.BLUE, pad=4),
             self.ratio(len(node.jobs), node.procs, 4),
-            self.pad(node.physmem, 8),
-            self.pad(node.totmem, 8),
-            self.pad(node.availmem, 8),
+            self.mem_out(node.physmem, pad=12),
+            self.mem_out(node.totmem, pad=12),
+            self.mem_out(node.availmem, pad=12),
             self.ratio(node.loadave, node.procs, pad=8),
             self.pad(node.state, 16)
         )
@@ -63,9 +62,25 @@ class Display:
         if pad > 1:
             msg = self.pad(msg, pad)
 
-        if self.color and color != None:
+        if self.color and color is not None:
             msg = self.colorize(msg, color)
-        
+
+        return msg
+
+    def mem_out(self, msg, color=None, pad=0):
+
+        def sizeof_fmt(num):
+            """ provide converted {''/K/.../Z}-byte and unit label """
+            for unit in ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z']:
+                if abs(num) < 1024.0:
+                    return "%3.2f" % num, unit
+                num /= 1024.0
+            return "%.2f" % num, 'Yi'
+
+        if pad > 1:
+            msg, unit = sizeof_fmt(int(msg) * 1024)  # convert kilobyte to byte
+            msg = self.pad(msg, pad, label=unit)
+
         return msg
 
     def ratio(self, value, maxval, pad=0):
@@ -77,9 +92,15 @@ class Display:
 
         return value
 
-    def pad(self, msg, size):
+    def pad(self, msg, size, label=None):
         msg = str(msg)
-        return (msg + " " * (size - len(msg)))[0:size]
+
+        if label:
+            pad_msg = (msg + label + " " * (size - len(msg) - len(label)))[0:size]
+        else:
+            pad_msg = (msg + " " * (size - len(msg)))[0:size]
+
+        return pad_msg
 
     def colorize_ratio(self, value, maxval):
         # Get the percentage and return the string with the
@@ -100,13 +121,13 @@ class Display:
 
     def colorize(self, msg, color):
         if color == Display.RED:
-            return "\033[31m%s\033[0m" %(msg)
+            return "\033[31m%s\033[0m" % (msg)
         elif color == Display.GREEN:
-            return "\033[1;32m%s\033[0m" %(msg)
+            return "\033[1;32m%s\033[0m" % (msg)
         elif color == Display.GRAY:
-            return "\033[1;30m%s\033[0m" %(msg)
+            return "\033[1;30m%s\033[0m" % (msg)
         elif color == Display.BLUE:
-            return "\033[1;34m%s\033[0m" %(msg)
+            return "\033[1;34m%s\033[0m" % (msg)
         elif color == Display.TEAL:
-            return "\033[36m%s\033[0m" %(msg)
+            return "\033[36m%s\033[0m" % (msg)
         return msg
