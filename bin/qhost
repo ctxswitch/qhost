@@ -32,6 +32,11 @@ def get_options():
         "-v", "--version",
         action="store_true", dest="version", default=False,
         help="Print version and exit.")
+    parser.add_option(
+        "-X", "--xmlfile",
+        dest="xmlfile", default=None,
+        help="Use an XML file containing the pbsnodes output instead of pbsnodes."
+    )
 
     (options, args) = parser.parse_args()
 
@@ -47,12 +52,15 @@ def run(options):
         sys.path.insert(0, lib_path)
     import qhost
 
-    pbsnodes = qhost.Pbsnodes("pbsnodes")
-    
-    xml = pbsnodes.execute()
-    if xml == None:
-        print pbsnodes.error
-        sys.exit(1)
+    if options.xmlfile is None:
+        pbsnodes = qhost.Pbsnodes("pbsnodes")
+        xml = pbsnodes.execute()
+        if xml == None:
+            print pbsnodes.error()
+            sys.exit(1)
+    else:
+        with open(options.xmlfile, 'r') as f:
+            xml = f.read()
 
     qp = qhost.Parser(xml)
     nodes = qp.parse()
@@ -60,7 +68,7 @@ def run(options):
     display.list(nodes)
 
 def main():
-    run(get_options())    
+    run(get_options())
 
 if __name__ == "__main__":
     main()
