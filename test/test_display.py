@@ -19,33 +19,33 @@ class TestDisplay(unittest.TestCase):
         self.assertEquals(o, "mess")
 
     def test_memout(self):
-        o = self.display.mem_out("1024", pad=5)
-        self.assertEquals(len(o), 5)
-        self.assertEquals(o, "1.00M")
+        o = self.display.mem_out("1024", pad=4)
+        self.assertEquals(len(o), 4)
+        self.assertEquals(o, "1.0M")
 
-        o = self.display.mem_out("1048576", pad=5)
-        self.assertEquals(len(o), 5)
-        self.assertEquals(o, "1.00G")
+        o = self.display.mem_out("1048576", pad=4)
+        self.assertEquals(len(o), 4)
+        self.assertEquals(o, "1.0G")
 
-        o = self.display.mem_out("1073741824", pad=5)
-        self.assertEquals(len(o), 5)
-        self.assertEquals(o, "1.00T")
+        o = self.display.mem_out("1073741824", pad=4)
+        self.assertEquals(len(o), 4)
+        self.assertEquals(o, "1.0T")
 
-        o = self.display.mem_out("1536", pad=5)
-        self.assertEquals(len(o), 5)
-        self.assertEquals(o, "1.50M")
+        o = self.display.mem_out("1536", pad=4)
+        self.assertEquals(len(o), 4)
+        self.assertEquals(o, "1.5M")
 
-        o = self.display.mem_out("1572864", pad=5)
-        self.assertEquals(len(o), 5)
-        self.assertEquals(o, "1.50G")
+        o = self.display.mem_out("1572864", pad=4)
+        self.assertEquals(len(o), 4)
+        self.assertEquals(o, "1.5G")
 
-        o = self.display.mem_out("536870912", pad=7)
-        self.assertEquals(len(o), 7)
-        self.assertEquals(o, "512.00G")
+        o = self.display.mem_out("536870912", pad=6)
+        self.assertEquals(len(o), 6)
+        self.assertEquals(o, "512.0G")
 
-        o = self.display.mem_out("2684354560", pad=5)
-        self.assertEquals(len(o), 5)
-        self.assertEquals(o, "2.50T")
+        o = self.display.mem_out("2684354560", pad=4)
+        self.assertEquals(len(o), 4)
+        self.assertEquals(o, "2.5T")
 
 if __name__ == "__main__":
     unittest.main()
