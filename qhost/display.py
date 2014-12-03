@@ -33,7 +33,7 @@ class Display:
                 print self.joblines(node)
 
     def header(self):
-        line = "%-16s %-4s %-4s %-12s %-12s %-12s %-8s %-16s\n" % (
+        line = "%-16s %-4s %-4s %-8s %-8s %-8s %-8s %-16s\n" % (
             "Node", "CPUs", "Jobs", "Memory", "Total", "Avail", "Load", "State"
         )
         line += "-" * 80
@@ -44,9 +44,9 @@ class Display:
             self.out(node.name, pad=16),
             self.out(node.procs, color=Display.BLUE, pad=4),
             self.ratio(len(node.jobs), node.procs, 4),
-            self.mem_out(node.physmem, pad=12),
-            self.mem_out(node.totmem, pad=12),
-            self.mem_out(node.availmem, pad=12),
+            self.mem_out(node.physmem, pad=8),
+            self.mem_out(node.totmem, pad=8),
+            self.mem_out(node.availmem, pad=8),
             self.ratio(node.loadave, node.procs, pad=8),
             self.pad(node.state, 16)
         )
@@ -79,7 +79,7 @@ class Display:
                 val /= 1024.0
                 unit = u
 
-        return self.out("%3.2f%s" % (val, unit), pad=pad)
+        return self.out("%3.1f%s" % (val, unit), pad=pad)
 
     def ratio(self, value, maxval, pad=0):
         if pad > 1:
