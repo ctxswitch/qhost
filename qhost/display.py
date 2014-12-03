@@ -68,20 +68,18 @@ class Display:
         return msg
 
     def mem_out(self, msg, color=None, pad=0):
+        val = int(msg)
+        unit = 'K'
 
-        def sizeof_fmt(num):
-            """ provide converted {''/K/.../Z}-byte and unit label """
-            for unit in ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z']:
-                if abs(num) < 1024.0:
-                    return "%3.2f" % num, unit
-                num /= 1024.0
-            return "%.2f" % num, 'Yi'
+        units = ['M', 'G', 'T']
+        for u in units:
+            if val < 1024.0:
+                break
+            else:
+                val /= 1024.0
+                unit = u
 
-        if pad > 1:
-            msg, unit = sizeof_fmt(int(msg) * 1024)  # convert kilobyte to byte
-            msg = self.pad(msg, pad, label=unit)
-
-        return msg
+        return self.out("%3.2f%s" % (val, unit), pad=pad)
 
     def ratio(self, value, maxval, pad=0):
         if pad > 1:
