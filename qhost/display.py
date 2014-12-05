@@ -40,7 +40,7 @@ class Display:
 
     def header(self):
         line = "%-21s %-8s %-3s %-3s %-8s %-8s %-6s %-4s   %-8s\n" % (
-            "NODE", "ARCH", "CPU", "GPU", "MEMTOT", "MEMUSE", "LOAD", "JOBS", "STATE"
+            "NODE", "OS", "CPU", "GPU", "MEMTOT", "MEMUSE", "LOAD", "JOBS", "STATE"
         )
         line += "-" * 79
         return line

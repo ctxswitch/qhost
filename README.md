@@ -23,6 +23,14 @@ qhost \[options\]
 
 ```-j, --jobs``` - display job information with the node
 
+```-p, --properties``` - display the node properties
+
+```-n, --ntype``` - display the node type
+
+```-f, --full``` - display all extended attributes including jobs, ntype and properties
+
+```-X, --xmpfile``` - use a previously stored xml file instead of calling pbsnodes
+
 ```-v, --version``` - display the version and exit
 
 ```-h, --help``` - display the help and exit
