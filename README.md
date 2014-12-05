@@ -29,7 +29,7 @@ qhost \[options\]
 
 ```-f, --full``` - display all extended attributes including jobs, ntype and properties
 
-```-X, --xmpfile``` - use a previously stored xml file instead of calling pbsnodes
+```-X, --xmlfile``` - use a previously stored xml file instead of calling pbsnodes
 
 ```-v, --version``` - display the version and exit
 
