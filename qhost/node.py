@@ -28,6 +28,9 @@ class Node:
         self.jobs = []
         self.loadave = 0
         self.os = ''
+        self.gpus = 0
+        self.properties = []
+        self.ntype = ''
 
     def __repr__(self):
         return self.name

@@ -16,7 +16,7 @@ import os
 import sys
 from optparse import OptionParser
 
-VERSION = '1.0.2'
+VERSION = '1.1.0'
 
 def get_options():
     parser = OptionParser()
@@ -28,6 +28,18 @@ def get_options():
         "-j", "--jobs",
         action="store_true", dest="jobs", default=False,
         help="show job information")
+    parser.add_option(
+        "-n", "--ntype",
+        action="store_true", dest="ntype", default=False,
+        help="show node type information")
+    parser.add_option(
+        "-p", "--properties",
+        action="store_true", dest="properties", default=False,
+        help="show node properties")
+    parser.add_option(
+        "-f", "--full",
+        action="store_true", dest="full", default=False,
+        help="show jobs, node properties, and type")
     parser.add_option(
         "-v", "--version",
         action="store_true", dest="version", default=False,
@@ -43,6 +55,11 @@ def get_options():
     if options.version:
         print "qhost version", VERSION
         sys.exit(0)
+
+    if options.full:
+        options.jobs = True
+        options.properties = True
+        options.ntype = True
 
     return options
 
@@ -64,7 +81,12 @@ def run(options):
 
     qp = qhost.Parser(xml)
     nodes = qp.parse()
-    display = qhost.Display(color=options.color, showjobs=options.jobs)
+    display = qhost.Display(
+        color=options.color,
+        showjobs=options.jobs,
+        showprops=options.properties,
+        showtype=options.ntype
+    )
     display.list(nodes)
 
 def main():
