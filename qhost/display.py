@@ -21,42 +21,67 @@ class Display:
     TEAL = 4
     RESET = 5
 
-    def __init__(self, color=False, showjobs=False):
+    def __init__(self, color=False, showjobs=False, showprops=False, showtype=False):
         self.color = color
         self.showjobs = showjobs
+        self.showprops = showprops
+        self.showtype = showtype
 
     def list(self, nodelist):
         print self.header()
         for node in nodelist:
             print self.nodeline(node)
+            if self.showprops and len(node.properties) > 0:
+                print self.proplines(node)
+            if self.showtype and len(node.ntype) > 0:
+                print self.typelines(node)
             if self.showjobs and len(node.jobs) > 0:
                 print self.joblines(node)
 
     def header(self):
-        line = "%-16s %-4s %-4s %-8s %-8s %-8s %-8s %-16s\n" % (
-            "Node", "CPUs", "Jobs", "Memory", "Total", "Avail", "Load", "State"
+        line = "%-21s %-8s %-3s %-3s %-8s %-8s %-6s %-4s   %-8s\n" % (
+            "NODE", "ARCH", "CPU", "GPU", "MEMTOT", "MEMUSE", "LOAD", "JOBS", "STATE"
         )
-        line += "-" * 80
+        line += "-" * 79
         return line
 
     def nodeline(self, node):
-        line = "%s %s %s %s %s %s %s %s" % (
-            self.out(node.name, pad=16),
-            self.out(node.procs, color=Display.BLUE, pad=4),
-            self.ratio(len(node.jobs), node.procs, 4),
-            self.mem_out(node.physmem, pad=8),
+        line = "%s %s %s %s %s %s %s %s | %s" % (
+            self.out(node.name, pad=21),
+            self.out(node.os, pad=8),
+            self.out(node.procs, pad=3),
+            self.out(node.gpus, pad=3),
             self.mem_out(node.totmem, pad=8),
-            self.mem_out(node.availmem, pad=8),
-            self.ratio(node.loadave, node.procs, pad=8),
-            self.pad(node.state, 16)
+            self.mem_out(node.totmem - node.availmem, pad=8),
+            self.ratio(node.loadave, node.procs, pad=6),
+            self.ratio(len(node.jobs), node.procs, pad=4),
+            self.state_out(node.state, pad=8)
         )
         return line
 
     def joblines(self, node):
-        line = ""
-        for job in node.jobs:
-            line += " * %s\n" % (job)
-        return self.out(line, color=Display.TEAL)
+        line =  " " * 22
+        line += self.pad("Jobs", 12) + ": "
+        line += ", ".join(node.jobs)
+        return self.out(line, color=Display.GRAY)
+
+    def proplines(self, node):
+        line =  " " * 22
+        line += self.pad("Properties", 12) + ": "
+        line += ", ".join(node.properties)
+        return self.out(line, color=Display.GRAY)
+
+    def typelines(self, node):
+        line =  " " * 22
+        line += self.pad("Node Type", 12) + ": "
+        line += node.ntype
+        return self.out(line, color=Display.GRAY)
+
+    def seperator(self):
+        line =  " " * 22
+        line += "-" * 5
+        line += "\n"
+        return line
 
     def out(self, msg, color=None, pad=0):
         if pad > 1:
@@ -80,6 +105,34 @@ class Display:
                 unit = u
 
         return self.out("%3.1f%s" % (val, unit), pad=pad)
+
+    def state_out(self, value, pad=0):
+        """ Valid states are free, offline, down, reserve,
+            job-exclusive, job-sharing, busy, time-shared,
+            or state-unknown"""
+        states = {
+            'free': ('F', Display.GREEN, 0),
+            'offline': ('O', Display.GRAY, 1),
+            'down': ('D', Display.RED, 2),
+            'reserve': ('R', Display.TEAL, 3),
+            'job-exclusive': ('E', Display.BLUE, 4),
+            'job-sharing': ('S', Display.TEAL, 5),
+            'time-shared': ('T', Display.TEAL, 6),
+            'state-unknown': ('U', Display.RED, 7)
+        }
+
+        arr = [" "] * 8
+        values = value.split(',')
+        for s in values:
+            arr[states[s][2]] = states[s][0]
+
+        msg = ''.join(arr)
+
+        if self.color:
+            """Use the first states color for all"""
+            msg = self.colorize(msg, states[values[0]][1])
+
+        return self.out(msg, pad=0)
 
     def ratio(self, value, maxval, pad=0):
         if pad > 1:

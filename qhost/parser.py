@@ -38,7 +38,10 @@ class Parser:
     def handle_node(self, node):
         name = self.handle_node_name(node.getElementsByTagName("name")[0])
         procs = self.handle_node_procs(node.getElementsByTagName("np")[0])
+        gpus = self.handle_node_procs(node.getElementsByTagName("gpus")[0])
         state = self.handle_node_state(node.getElementsByTagName("state")[0])
+        properties = self.handle_node_state(node.getElementsByTagName("properties")[0]).split(',')
+        ntype = self.handle_node_state(node.getElementsByTagName("ntype")[0])
 
         try:
           status = self.handle_node_status(node.getElementsByTagName("status")[0])
@@ -46,13 +49,20 @@ class Parser:
           status = ""
 
         if node.getElementsByTagName("jobs"):
-            jobs = self.handle_node_jobs(node.getElementsByTagName("jobs")[0])
+            j = self.handle_node_jobs(node.getElementsByTagName("jobs")[0])
+            jobs = set(
+                map(lambda x: x.split('/')[1].split('.')[0], j)
+            )
         else:
             jobs = []
 
         node = Node(name)
         node.procs = procs
+        node.gpus = gpus
         node.state = state
+        node.properties = properties
+        node.ntype = ntype
+
         if 'physmem' in status:
             node.physmem = status['physmem']
         if 'availmem' in status:
