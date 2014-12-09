@@ -78,7 +78,7 @@ def run(options):
     else:
         try:
             xml = open(options.xmlfile, 'r').read()
-        except IOError as e:
+        except IOError, e:
             print e
             sys.exit(1)
 
