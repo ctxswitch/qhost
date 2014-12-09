@@ -16,7 +16,7 @@ import os
 import sys
 from optparse import OptionParser
 
-VERSION = '1.1.0'
+VERSION = '1.1.1'
 
 def get_options():
     parser = OptionParser()
@@ -76,8 +76,11 @@ def run(options):
             print pbsnodes.error()
             sys.exit(1)
     else:
-        with open(options.xmlfile, 'r') as f:
-            xml = f.read()
+        try:
+            xml = open(options.xmlfile, 'r').read()
+        except IOError as e:
+            print e
+            sys.exit(1)
 
     qp = qhost.Parser(xml)
     nodes = qp.parse()

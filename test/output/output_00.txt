@@ -1,0 +1,7 @@
+NODE                  OS       CPU GPU MEMTOT   MEMUSE   LOAD   JOBS   STATE   
+-------------------------------------------------------------------------------
+node1                 linux    12  0   23.5G    1.4G     0.0    0    | F       
+node14                linux    12  0   23.5G    1.4G     0.0    0    |   D     
+node150               linux    12  0   23.5G    8.1G     12.01  1    |     E   
+node163               linux    12  0   23.5G    5.9G     12.0   4    |  O  E   
+node164               linux    12  0   23.5G    5.0G     12.0   1    |     E   
