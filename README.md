@@ -36,4 +36,4 @@ qhost \[options\]
 ```-h, --help``` - display the help and exit
 
 ## Version
-1.0.2
+1.1.1
