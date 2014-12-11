@@ -16,10 +16,15 @@ import os
 import sys
 from optparse import OptionParser
 
-VERSION = '1.1.1'
+lib_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../')
+if lib_path not in sys.path:
+    sys.path.insert(0, lib_path)
+import qhost
+from qhost.constants import *
 
 def get_options():
-    parser = OptionParser()
+    usage = "usage: %prog [options] [optional-node-regex]"
+    parser = OptionParser(usage=usage)
     parser.add_option(
         "-c", "--color",
         action="store_true", dest="color", default=False,
@@ -37,13 +42,21 @@ def get_options():
         action="store_true", dest="properties", default=False,
         help="show node properties")
     parser.add_option(
-        "-f", "--full",
-        action="store_true", dest="full", default=False,
+        "-a", "--all",
+        action="store_true", dest="all", default=False,
         help="show jobs, node properties, and type")
     parser.add_option(
         "-v", "--version",
         action="store_true", dest="version", default=False,
         help="Print version and exit.")
+    parser.add_option(
+        "-s", "--state",
+        dest="state", default=STATE_DEFAULT,
+        help="Filter nodes by state. Valid state characters are F (free), " +
+            "O (offline), D (down), R (reserve), E (job-exclusive), " +
+            "S (job-sharing), B (busy), T (time-shared), and " +
+            "U (state-unknown)."
+    )
     parser.add_option(
         "-X", "--xmlfile",
         dest="xmlfile", default=None,
@@ -56,19 +69,19 @@ def get_options():
         print "qhost version", VERSION
         sys.exit(0)
 
-    if options.full:
+    if options.all:
         options.jobs = True
         options.properties = True
         options.ntype = True
 
+    if len(args) > 0:
+        options.node_regex = args[0]
+    else:
+        options.node_regex = ".*"
+
     return options
 
 def run(options):
-    lib_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../')
-    if lib_path not in sys.path:
-        sys.path.insert(0, lib_path)
-    import qhost
-
     if options.xmlfile is None:
         pbsnodes = qhost.Pbsnodes("pbsnodes")
         xml = pbsnodes.execute()
@@ -88,7 +101,9 @@ def run(options):
         color=options.color,
         showjobs=options.jobs,
         showprops=options.properties,
-        showtype=options.ntype
+        showtype=options.ntype,
+        noderegex=options.node_regex,
+        statestring=options.state
     )
     display.list(nodes)
 
