@@ -14,9 +14,14 @@
 # limitations under the License.
 from distutils.core import setup
 
+lib_path = os.path.join(os.path.dirname(os.path.abspath(__file__)))
+if lib_path not in sys.path:
+    sys.path.insert(0, lib_path)
+from qhost.constants import VERSION
+
 setup(
     name='qhost',
-    version='1.0.0',
+    version=VERSION,
     author='Rob Lyon <nosignsoflifehere@gmail.com>',
     url='http://rlyon.me',
     packages=['qhost'],
