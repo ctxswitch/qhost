@@ -14,6 +14,8 @@
 # limitations under the License.
 from distutils.core import setup
 
+import os
+import sys
 lib_path = os.path.join(os.path.dirname(os.path.abspath(__file__)))
 if lib_path not in sys.path:
     sys.path.insert(0, lib_path)
