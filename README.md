@@ -12,7 +12,7 @@ There are several significant changes in output and functionality in 1.2.1.  The
 The other significant change is the addition of filters.  Using the ```state``` option, you can pass in the same characters that are used to represent to only display the nodes in a specific state.  The default is all states.  For the final argument you can provide a regular expression for node name filtering.  Some examples are:
 
 ```sh
-$ ./bin/qhost n0[15]
+$ qhost n0[15]
 NODE                  OS       CPU GPU MEMTOT   MEMUSE   LOAD   JOBS   STATE
 -------------------------------------------------------------------------------
 n010                  linux    8   0   33.4G    1.9G     0.0    0    | F
@@ -35,7 +35,7 @@ n056                  linux    8   0   33.4G    1.6G     0.0    0    | F
 n057                  linux    8   0   33.4G    1.6G     8.25   1    |     E
 n058                  linux    8   0   33.4G    3.1G     8.02   1    |     E
 n059                  linux    8   0   33.4G    2.5G     8.0    1    |     E
-$ ./bin/qhost -s OE n0[15]
+$ qhost -s OE n0[15]
 NODE                  OS       CPU GPU MEMTOT   MEMUSE   LOAD   JOBS   STATE
 -------------------------------------------------------------------------------
 n014                  linux    8   0   33.4G    1.1G     0.0    0    |  O
