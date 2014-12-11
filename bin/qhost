@@ -22,8 +22,6 @@ if lib_path not in sys.path:
 import qhost
 from qhost.constants import *
 
-VERSION = '1.2.1'
-
 def get_options():
     usage = "usage: %prog [options] [optional-node-regex]"
     parser = OptionParser(usage=usage)

@@ -14,6 +14,7 @@
 
 from color import Color
 
+VERSION = '1.2.1'
 
 """ Valid states are free, offline, down, reserve,
     job-exclusive, job-sharing, busy, time-shared,

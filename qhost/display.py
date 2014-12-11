@@ -44,9 +44,11 @@ class Display:
     def matched_state(self, states):
         # States come in as human readable, there's a good chance
         # this will change in the future, but for right now we need
-        # to convert them to chars
-        s = map(lambda x: STATES[x][0], states.split(','))
-        ss = list(self.statestring)
+        # to convert them to chars.  Sort these so out of order arrays
+        # can still return true when we intersect the sets.
+        s = sorted(map(lambda x: STATES[x][0], states.split(',')))
+        ss = sorted(list(self.statestring))
+        ns = list(set(s) & set(ss))
         return list(set(s) & set(ss)) == s
 
     def display_node(self, node):
