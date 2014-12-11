@@ -9,10 +9,10 @@ Gridengine qhost replacement for PBS based systems. Summarize pbsnodes output in
 ## Changes
 There are several significant changes in output and functionality in 1.2.1.  The state is now displayed as an offset character representing the 8 possible PBS states.  This was done for two reasons: 1) make the output easier to scan, and 2) keep the lines a static length when multiple states were present (i.e. job-exclusive and down/offline).  
 
-The other significant change is the addition of filters.  Using the ```state``` option, you can pass in the same characters that are used to represent to only display the nodes in a specific state.  The default is all states.  For the final argument you can provide a regular expression for node name filtering.  Some examples are:
+The other significant change is the addition of filters.  Using the ```state``` option, you can pass in the same characters that are used to represent to only display the nodes in a specific state.  The default is all states.  For the final argument you can provide a regular expression for node name matching.  The expression will match any part of the node unless you specify the beginning and end of the pattern (i.e. "^n.*4$") Some examples are:
 
 ```sh
-$ ./bin/qhost n0[15]
+$ qhost n0[15]
 NODE                  OS       CPU GPU MEMTOT   MEMUSE   LOAD   JOBS   STATE
 -------------------------------------------------------------------------------
 n010                  linux    8   0   33.4G    1.9G     0.0    0    | F
@@ -35,13 +35,23 @@ n056                  linux    8   0   33.4G    1.6G     0.0    0    | F
 n057                  linux    8   0   33.4G    1.6G     8.25   1    |     E
 n058                  linux    8   0   33.4G    3.1G     8.02   1    |     E
 n059                  linux    8   0   33.4G    2.5G     8.0    1    |     E
-$ ./bin/qhost -s OE n0[15]
+$ qhost -s OE n0[15]
 NODE                  OS       CPU GPU MEMTOT   MEMUSE   LOAD   JOBS   STATE
 -------------------------------------------------------------------------------
 n014                  linux    8   0   33.4G    1.1G     0.0    0    |  O
 n057                  linux    8   0   33.4G    1.6G     8.25   1    |     E
 n058                  linux    8   0   33.4G    3.1G     8.02   1    |     E
 n059                  linux    8   0   33.4G    2.5G     8.0    1    |     E
+$ qhost "^n.*4$"
+NODE                  OS       CPU GPU MEMTOT   MEMUSE   LOAD   JOBS   STATE   
+-------------------------------------------------------------------------------
+n004                  linux    8   0   33.4G    1.9G     0.07   0    | F       
+n014                  linux    8   0   33.4G    1.1G     0.0    0    |  O      
+n024                  linux    8   0   33.4G    2.0G     0.04   0    | F       
+n034                  linux    8   0   33.4G    2.0G     0.04   0    | F       
+n044                  linux    8   0   33.4G    2.1G     0.0    0    | F       
+n054                  linux    8   0   33.4G    2.6G     0.0    0    | F       
+n064                  linux    8   0   33.4G    22.7G    1.0    1    | F
 ```
 
 ## Install
@@ -62,7 +72,7 @@ qhost \[options\] \[optional-node-regex\]
 * ```-j, --jobs``` - display job information with the node
 * ```-p, --properties``` - display the node properties
 * ```-n, --ntype``` - display the node type
-* ```-f, --full``` - display all extended attributes including jobs, ntype and properties
+* ```-a, --all``` - display all extended attributes including jobs, ntype and properties
 * ```-s STATE, --state=STATE``` - Filter nodes by state. Valid state characters are F (free), O (offline), D (down), R (reserve), E (job-exclusive), S (job-sharing), B (busy), T (time-shared), and U (state-unknown).
 * ```-X XMLFILE, --xmlfile XMLFILE``` - use a previously stored xml file instead of calling pbsnodes
 * ```-v, --version``` - display the version and exit
