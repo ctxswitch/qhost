@@ -27,7 +27,6 @@ class Parser:
         nodes = dom.getElementsByTagName("Node")
         return self.handle_nodes(nodes)
 
-
     def handle_nodes(self, nodes):
         nodelist = []
         for node in nodes:
@@ -40,13 +39,15 @@ class Parser:
         procs = self.handle_node_procs(node.getElementsByTagName("np")[0])
         gpus = self.handle_node_procs(node.getElementsByTagName("gpus")[0])
         state = self.handle_node_state(node.getElementsByTagName("state")[0])
-        properties = self.handle_node_state(node.getElementsByTagName("properties")[0]).split(',')
+        properties = self.handle_node_state(
+            node.getElementsByTagName("properties")[0]).split(',')
         ntype = self.handle_node_state(node.getElementsByTagName("ntype")[0])
 
         try:
-          status = self.handle_node_status(node.getElementsByTagName("status")[0])
+            status = self.handle_node_status(
+                node.getElementsByTagName("status")[0])
         except:
-          status = ""
+            status = ""
 
         if node.getElementsByTagName("jobs"):
             j = self.handle_node_jobs(node.getElementsByTagName("jobs")[0])

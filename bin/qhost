@@ -12,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import os
 import sys
 from optparse import OptionParser
@@ -20,7 +21,8 @@ lib_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../')
 if lib_path not in sys.path:
     sys.path.insert(0, lib_path)
 import qhost
-from qhost.constants import *
+from qhost.constants import STATE_DEFAULT, VERSION
+
 
 def get_options():
     usage = "usage: %prog [options] [optional-node-regex]"
@@ -53,14 +55,15 @@ def get_options():
         "-s", "--state",
         dest="state", default=STATE_DEFAULT,
         help="Filter nodes by state. Valid state characters are F (free), " +
-            "O (offline), D (down), R (reserve), E (job-exclusive), " +
-            "S (job-sharing), B (busy), T (time-shared), and " +
-            "U (state-unknown)."
+             "O (offline), D (down), R (reserve), E (job-exclusive), " +
+             "S (job-sharing), B (busy), T (time-shared), and " +
+             "U (state-unknown)."
     )
     parser.add_option(
         "-X", "--xmlfile",
         dest="xmlfile", default=None,
-        help="Use an XML file containing the pbsnodes output instead of pbsnodes."
+        help="Use an XML file containing the pbsnodes output instead of " +
+             "pbsnodes."
     )
 
     (options, args) = parser.parse_args()
@@ -81,11 +84,12 @@ def get_options():
 
     return options
 
+
 def run(options):
     if options.xmlfile is None:
         pbsnodes = qhost.Pbsnodes("pbsnodes")
         xml = pbsnodes.execute()
-        if xml == None:
+        if xml is None:
             print pbsnodes.error()
             sys.exit(1)
     else:
@@ -106,6 +110,7 @@ def run(options):
         statestring=options.state
     )
     display.list(nodes)
+
 
 def main():
     run(get_options())

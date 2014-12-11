@@ -13,8 +13,9 @@
 # limitations under the License.
 
 import re
-from constants import *
+from constants import STATES
 from color import Color
+
 
 class Display:
     RED = 0
@@ -24,7 +25,8 @@ class Display:
     TEAL = 4
     RESET = 5
 
-    def __init__(self, color=False, showjobs=False, showprops=False, showtype=False, noderegex=".*", statestring=None):
+    def __init__(self, color=False, showjobs=False, showprops=False,
+                 showtype=False, noderegex=".*", statestring=None):
         self.color = color
         self.showjobs = showjobs
         self.showprops = showprops
@@ -48,7 +50,6 @@ class Display:
         # can still return true when we intersect the sets.
         s = sorted(map(lambda x: STATES[x][0], states.split(',')))
         ss = sorted(list(self.statestring))
-        ns = list(set(s) & set(ss))
         return list(set(s) & set(ss)) == s
 
     def display_node(self, node):
@@ -62,7 +63,8 @@ class Display:
 
     def header(self):
         line = "%-21s %-8s %-3s %-3s %-8s %-8s %-6s %-4s   %-8s\n" % (
-            "NODE", "OS", "CPU", "GPU", "MEMTOT", "MEMUSE", "LOAD", "JOBS", "STATE"
+            "NODE", "OS", "CPU", "GPU", "MEMTOT",
+            "MEMUSE", "LOAD", "JOBS", "STATE"
         )
         line += "-" * 79
         return line
@@ -82,25 +84,25 @@ class Display:
         return line
 
     def joblines(self, node):
-        line =  " " * 22
+        line = " " * 22
         line += self.pad("Jobs", 12) + ": "
         line += ", ".join(node.jobs)
         return self.out(line, color=Color.GRAY)
 
     def proplines(self, node):
-        line =  " " * 22
+        line = " " * 22
         line += self.pad("Properties", 12) + ": "
         line += ", ".join(node.properties)
         return self.out(line, color=Color.GRAY)
 
     def typelines(self, node):
-        line =  " " * 22
+        line = " " * 22
         line += self.pad("Node Type", 12) + ": "
         line += node.ntype
         return self.out(line, color=Color.GRAY)
 
     def seperator(self):
-        line =  " " * 22
+        line = " " * 22
         line += "-" * 5
         line += "\n"
         return line
@@ -155,7 +157,8 @@ class Display:
         msg = str(msg)
 
         if label:
-            pad_msg = (msg + label + " " * (size - len(msg) - len(label)))[0:size]
+            pad_msg = (msg + label + " " * (size - len(msg) -
+                       len(label)))[0:size]
         else:
             pad_msg = (msg + " " * (size - len(msg)))[0:size]
 
