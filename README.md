@@ -56,25 +56,17 @@ Clone this repository then:
 
 qhost \[options\] \[optional-node-regex\]
 
-## Options
+### Options
 
-```-c, --color``` - colorize some of the output
-
-```-j, --jobs``` - display job information with the node
-
-```-p, --properties``` - display the node properties
-
-```-n, --ntype``` - display the node type
-
-```-f, --full``` - display all extended attributes including jobs, ntype and properties
-
-```-s STATE, --state=STATE``` - Filter nodes by state. Valid state characters are F (free), O (offline), D (down), R (reserve), E (job-exclusive), S (job-sharing), B (busy), T (time-shared), and U (state-unknown).
-
-```-X XMLFILE, --xmlfile=XMLFILE``` - use a previously stored xml file instead of calling pbsnodes
-
-```-v, --version``` - display the version and exit
-
-```-h, --help``` - display the help and exit
+* ```-c, --color``` - colorize some of the output
+* ```-j, --jobs``` - display job information with the node
+* ```-p, --properties``` - display the node properties
+* ```-n, --ntype``` - display the node type
+* ```-f, --full``` - display all extended attributes including jobs, ntype and properties
+* ```-s STATE, --state=STATE``` - Filter nodes by state. Valid state characters are F (free), O (offline), D (down), R (reserve), E (job-exclusive), S (job-sharing), B (busy), T (time-shared), and U (state-unknown).
+* ```-X XMLFILE, --xmlfile XMLFILE``` - use a previously stored xml file instead of calling pbsnodes
+* ```-v, --version``` - display the version and exit
+* ```-h, --help``` - display the help and exit
 
 ## Contributing
 
@@ -82,6 +74,12 @@ qhost \[options\] \[optional-node-regex\]
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+3. Make your changes
+4. Add some tests
+5. Commit your changes (`git commit -am 'Add some feature'`)
+6. Push to the branch (`git push origin my-new-feature`)
+7. Create new Pull Request
+
+### Reporting/Fixing bugs
+
+If you run into an issue, save the output of ```pbsnodes -x``` so the issue can be isolated and tests created.  If you use the output for a test, please make sure you de-identify anything that you don't want available for the world to see.
