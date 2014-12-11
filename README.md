@@ -9,7 +9,7 @@ Gridengine qhost replacement for PBS based systems. Summarize pbsnodes output in
 ## Changes
 There are several significant changes in output and functionality in 1.2.1.  The state is now displayed as an offset character representing the 8 possible PBS states.  This was done for two reasons: 1) make the output easier to scan, and 2) keep the lines a static length when multiple states were present (i.e. job-exclusive and down/offline).  
 
-The other significant change is the addition of filters.  Using the ```state``` option, you can pass in the same characters that are used to represent to only display the nodes in a specific state.  The default is all states.  For the final argument you can provide a regular expression for node name matching.  The expression will match any part of the node unless you specify the beginning and end of the pattern (i.e. "^n.*4$") Some examples are:
+The other significant change is the addition of filters.  Using the ```state``` option, you can pass in the same characters used to represent state in the output to filter and display the nodes in the specified states.  The default is to display all states.  For the final argument you can provide a regular expression for node name matching.  The expression will match any part of the node unless you specify the beginning and end of the pattern (i.e. "^n.*4$") Some examples are:
 
 ```sh
 $ qhost n0[15]
