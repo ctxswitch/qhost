@@ -1,0 +1,22 @@
+NODE                  OS       CPU GPU MEMTOT   MEMUSE   LOAD   JOBS   STATE   
+-------------------------------------------------------------------------------
+n010                  linux    8   0   33.4G    1.9G     0.0    0    | F       
+n011                  linux    8   0   33.4G    1.9G     0.0    0    | F       
+n012                  linux    8   0   33.4G    1.9G     0.02   0    | F       
+n013                  linux    8   0   33.4G    1.9G     0.01   0    | F       
+n014                  linux    8   0   33.4G    1.1G     0.0    0    |  O      
+n015                  linux    8   0   33.4G    2.0G     0.0    0    | F       
+n016                  linux    8   0   33.4G    2.0G     0.14   0    | F       
+n017                  linux    8   0   33.4G    1.7G     0.0    0    | F       
+n018                  linux    8   0   33.4G    2.0G     0.0    0    | F       
+n019                  linux    8   0   33.4G    1.9G     0.0    0    | F       
+n050                  linux    8   0   33.4G    2.6G     0.03   0    | F       
+n051                  linux    8   0   33.4G    2.6G     0.0    0    | F       
+n052                  linux    8   0   33.4G    2.5G     0.0    0    | F       
+n053                  linux    8   0   33.4G    1.5G     0.03   0    | F       
+n054                  linux    8   0   33.4G    2.6G     0.0    0    | F       
+n055                  linux    8   0   33.4G    2.6G     0.0    0    | F       
+n056                  linux    8   0   33.4G    1.6G     0.0    0    | F       
+n057                  linux    8   0   33.4G    1.6G     8.25   1    |     E   
+n058                  linux    8   0   33.4G    3.1G     8.02   1    |     E   
+n059                  linux    8   0   33.4G    2.5G     8.0    1    |     E   

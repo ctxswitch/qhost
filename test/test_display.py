@@ -19,31 +19,31 @@ class TestDisplay(unittest.TestCase):
         self.assertEquals(o, "mess")
 
     def test_memout(self):
-        o = self.display.mem_out("1024", pad=4)
+        o = self.display.memory("1024", pad=4)
         self.assertEquals(len(o), 4)
         self.assertEquals(o, "1.0M")
 
-        o = self.display.mem_out("1048576", pad=4)
+        o = self.display.memory("1048576", pad=4)
         self.assertEquals(len(o), 4)
         self.assertEquals(o, "1.0G")
 
-        o = self.display.mem_out("1073741824", pad=4)
+        o = self.display.memory("1073741824", pad=4)
         self.assertEquals(len(o), 4)
         self.assertEquals(o, "1.0T")
 
-        o = self.display.mem_out("1536", pad=4)
+        o = self.display.memory("1536", pad=4)
         self.assertEquals(len(o), 4)
         self.assertEquals(o, "1.5M")
 
-        o = self.display.mem_out("1572864", pad=4)
+        o = self.display.memory("1572864", pad=4)
         self.assertEquals(len(o), 4)
         self.assertEquals(o, "1.5G")
 
-        o = self.display.mem_out("536870912", pad=6)
+        o = self.display.memory("536870912", pad=6)
         self.assertEquals(len(o), 6)
         self.assertEquals(o, "512.0G")
 
-        o = self.display.mem_out("2684354560", pad=4)
+        o = self.display.memory("2684354560", pad=4)
         self.assertEquals(len(o), 4)
         self.assertEquals(o, "2.5T")
 
