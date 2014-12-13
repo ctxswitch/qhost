@@ -71,3 +71,17 @@ class TestBin(unittest.TestCase):
             os.path.join(top, 'test', 'output', 'output_04_3.txt')
         ).read()
         self.assertEquals(actual, expected)
+
+    def test_filter_by_jobid(self):
+        top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
+        cmd = [
+            os.path.join(top, 'bin', 'qhost'),
+            '-X',
+            os.path.join(top, 'test', 'output', 'output_04.xml'),
+            '-J 1158770'
+        ]
+        actual = os.popen(' '.join(cmd)).read()
+        expected = open(
+            os.path.join(top, 'test', 'output', 'output_04_5.txt')
+        ).read()
+        self.assertEquals(actual, expected)

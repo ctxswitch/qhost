@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import re
-from constants import STATES
+from constants import STATE_CHARS
 from color import Color
 
 
@@ -26,31 +26,16 @@ class Display:
     RESET = 5
 
     def __init__(self, color=False, showjobs=False, showprops=False,
-                 showtype=False, noderegex=".*", statestring=None):
+                 showtype=False):
         self.color = color
         self.showjobs = showjobs
         self.showprops = showprops
         self.showtype = showtype
-        self.noderegex = re.compile(noderegex)
-        self.statestring = statestring
 
     def list(self, nodelist):
         print self.header()
         for node in nodelist:
-            if self.matched_node(node.name) and self.matched_state(node.state):
-                self.display_node(node)
-
-    def matched_node(self, name):
-        return not self.noderegex.search(name) is None
-
-    def matched_state(self, states):
-        # States come in as human readable, there's a good chance
-        # this will change in the future, but for right now we need
-        # to convert them to chars.  Sort these so out of order arrays
-        # can still return true when we intersect the sets.
-        s = sorted(map(lambda x: STATES[x][0], states.split(',')))
-        ss = sorted(list(self.statestring))
-        return list(set(s) & set(ss)) == s
+            self.display_node(node)
 
     def display_node(self, node):
         print self.nodeline(node)
@@ -62,23 +47,24 @@ class Display:
             print self.joblines(node)
 
     def header(self):
-        line = "%-21s %-8s %-3s %-3s %-8s %-8s %-6s %-4s   %-8s\n" % (
+        line = "%-18s %-7s %-3s %-3s %-8s %-8s %-4s %-4s %-6s  %-8s\n" % (
             "NODE", "OS", "CPU", "GPU", "MEMTOT",
-            "MEMUSE", "LOAD", "JOBS", "STATE"
+            "MEMUSE", "JOBS", "SLOT", "LOAD", "STATE"
         )
-        line += "-" * 79
+        line += "-" * 80
         return line
 
     def nodeline(self, node):
-        line = "%s %s %s %s %s %s %s %s | %s" % (
-            self.out(node.name, pad=21),
-            self.out(node.os, pad=8),
+        line = "%s %s %s %s %s %s %s %s %s | %s" % (
+            self.out(node.name, pad=18),
+            self.out(node.os, pad=7),
             self.out(node.procs, pad=3),
             self.out(node.gpus, pad=3),
             self.memory(node.totmem, pad=8),
             self.memory(node.totmem - node.availmem, pad=8),
+            self.out(len(node.jobs), pad=4),
+            self.ratio(node.slots, node.procs, pad=4),
             self.ratio(node.loadave, node.procs, pad=6),
-            self.ratio(len(node.jobs), node.procs, pad=4),
             self.state(node.state, pad=8)
         )
         return line
@@ -86,6 +72,7 @@ class Display:
     def joblines(self, node):
         line = " " * 22
         line += self.pad("Jobs", 12) + ": "
+        # Use set to only show unique jobids
         line += ", ".join(node.jobs)
         return self.out(line, color=Color.GRAY)
 
@@ -130,17 +117,16 @@ class Display:
 
         return self.out("%3.1f%s" % (val, unit), pad=pad)
 
-    def state(self, value, pad=0):
+    def state(self, values, pad=0):
         arr = [" "] * 8
-        values = value.split(',')
         for s in values:
-            arr[STATES[s][2]] = STATES[s][0]
+            arr[STATE_CHARS.index(s)] = s
 
         msg = ''.join(arr)
 
-        if self.color:
-            """Use the first states color for all"""
-            msg = Color.message(msg, STATES[values[0]][1])
+        #if self.color:
+        #    """Use the first states color for all"""
+        #    msg = Color.message(msg, STATES[values[0]][1])
 
         return self.out(msg, pad=0)
 

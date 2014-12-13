@@ -31,5 +31,3 @@ STATES = {
 }
 
 STATE_CHARS = ['F', 'O', 'D', 'R', 'E', 'S', 'T', 'U']
-
-STATE_DEFAULT = "FODRESTU"

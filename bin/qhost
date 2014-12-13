@@ -21,7 +21,7 @@ lib_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../')
 if lib_path not in sys.path:
     sys.path.insert(0, lib_path)
 import qhost
-from qhost.constants import STATE_DEFAULT, VERSION
+from qhost.constants import VERSION
 
 
 def get_options():
@@ -35,6 +35,10 @@ def get_options():
         "-j", "--jobs",
         action="store_true", dest="jobs", default=False,
         help="show job information")
+    parser.add_option(
+        "-J", "--jobid",
+        dest="jobid", default=None,
+        help="Only show nodes used by the specified job ID.")
     parser.add_option(
         "-n", "--ntype",
         action="store_true", dest="ntype", default=False,
@@ -53,7 +57,7 @@ def get_options():
         help="Print version and exit.")
     parser.add_option(
         "-s", "--state",
-        dest="state", default=STATE_DEFAULT,
+        dest="state", default=None,
         help="Filter nodes by state. Valid state characters are F (free), " +
              "O (offline), D (down), R (reserve), E (job-exclusive), " +
              "S (job-sharing), B (busy), T (time-shared), and " +
@@ -80,7 +84,7 @@ def get_options():
     if len(args) > 0:
         options.node_regex = args[0]
     else:
-        options.node_regex = ".*"
+        options.node_regex = None
 
     return options
 
@@ -100,16 +104,18 @@ def run(options):
             sys.exit(1)
 
     qp = qhost.Parser(xml)
-    nodes = qp.parse()
+    nodelist = qp.parse()
+    nodelist.add_filter("state", options.state)
+    nodelist.add_filter("node_regex", options.node_regex)
+    nodelist.add_filter("jobid", options.jobid)
+
     display = qhost.Display(
         color=options.color,
         showjobs=options.jobs,
         showprops=options.properties,
-        showtype=options.ntype,
-        noderegex=options.node_regex,
-        statestring=options.state
+        showtype=options.ntype
     )
-    display.list(nodes)
+    display.list(nodelist)
 
 
 def main():

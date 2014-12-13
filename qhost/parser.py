@@ -13,6 +13,8 @@
 # limitations under the License.
 import xml.dom.minidom
 from qhost import Node
+from qhost import NodeList
+from constants import STATES
 
 
 class Parser:
@@ -28,9 +30,9 @@ class Parser:
         return self.handle_nodes(nodes)
 
     def handle_nodes(self, nodes):
-        nodelist = []
+        nodelist = NodeList()
         for node in nodes:
-            nodelist.append(self.handle_node(node))
+            nodelist.add(self.handle_node(node))
 
         return nodelist
 
@@ -51,18 +53,18 @@ class Parser:
 
         if node.getElementsByTagName("jobs"):
             j = self.handle_node_jobs(node.getElementsByTagName("jobs")[0])
-            jobs = set(
-                map(lambda x: x.split('/')[1].split('.')[0], j)
-            )
+            jobs = map(lambda x: x.split('/')[1].split('.')[0], j)
         else:
             jobs = []
 
         node = Node(name)
         node.procs = procs
         node.gpus = gpus
-        node.state = state
+        node.state = sorted(map(lambda x: STATES[x][0], state.split(',')))
         node.properties = properties
         node.ntype = ntype
+        node.slots = len(jobs)
+        node.jobs = set(jobs)
 
         if 'physmem' in status:
             node.physmem = status['physmem']
@@ -82,7 +84,7 @@ class Parser:
             node.uname = status['uname']
         if 'os' in status:
             node.os = status['os']
-        node.jobs = jobs
+
         return node
 
     def handle_node_name(self, node):
