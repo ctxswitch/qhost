@@ -15,4 +15,5 @@
 from pbsnodes import Pbsnodes
 from display import Display
 from node import Node
+from node_list import NodeList
 from parser import Parser

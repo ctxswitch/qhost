@@ -12,12 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import re
+
 
 class Node:
     def __init__(self, name):
         self.name = name
         self.uname = ''
-        self.state = ''
+        self.state = []
         self.sessions = []
         self.nsessions = 0
         self.nusers = 0
@@ -31,9 +33,25 @@ class Node:
         self.gpus = 0
         self.properties = []
         self.ntype = ''
+        self.slots = 0
 
     def __repr__(self):
         return self.name
 
     def __str__(self):
         return self.name
+
+    def has_job(self, jobid):
+        return jobid in self.jobs
+
+    def matches(self, regex):
+        match = re.compile(regex)
+        return not match.search(self.name) is None
+
+    def state_matches(self, states):
+        # States come in as human readable, there's a good chance
+        # this will change in the future, but for right now we need
+        # to convert them to chars.  Sort these so out of order arrays
+        # can still return true when we intersect the sets.
+        state = sorted(list(states))
+        return list(set(self.state) & set(state)) == self.state
