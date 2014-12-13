@@ -12,8 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import re
-from constants import STATE_CHARS
+from constants import STATE_CHARS, STATE_COLORS
 from color import Color
 
 
@@ -70,26 +69,26 @@ class Display:
         return line
 
     def joblines(self, node):
-        line = " " * 22
+        line = " " * 19
         line += self.pad("Jobs", 12) + ": "
         # Use set to only show unique jobids
         line += ", ".join(node.jobs)
         return self.out(line, color=Color.GRAY)
 
     def proplines(self, node):
-        line = " " * 22
+        line = " " * 19
         line += self.pad("Properties", 12) + ": "
         line += ", ".join(node.properties)
         return self.out(line, color=Color.GRAY)
 
     def typelines(self, node):
-        line = " " * 22
+        line = " " * 19
         line += self.pad("Node Type", 12) + ": "
         line += node.ntype
         return self.out(line, color=Color.GRAY)
 
     def seperator(self):
-        line = " " * 22
+        line = " " * 19
         line += "-" * 5
         line += "\n"
         return line
@@ -124,9 +123,9 @@ class Display:
 
         msg = ''.join(arr)
 
-        #if self.color:
-        #    """Use the first states color for all"""
-        #    msg = Color.message(msg, STATES[values[0]][1])
+        if self.color:
+            """Use the first states color for all"""
+            msg = Color.message(msg, STATE_COLORS[values[0]])
 
         return self.out(msg, pad=0)
 

@@ -14,20 +14,31 @@
 
 from color import Color
 
-VERSION = '1.2.1'
+VERSION = '1.3.0'
 
 """ Valid states are free, offline, down, reserve,
     job-exclusive, job-sharing, busy, time-shared,
     or state-unknown"""
 STATES = {
-    'free': ('F', Color.GREEN, 0),
-    'offline': ('O', Color.GRAY, 1),
-    'down': ('D', Color.RED, 2),
-    'reserve': ('R', Color.TEAL, 3),
-    'job-exclusive': ('E', Color.BLUE, 4),
-    'job-sharing': ('S', Color.TEAL, 5),
-    'time-shared': ('T', Color.TEAL, 6),
-    'state-unknown': ('U', Color.RED, 7)
+    'free': 'F',
+    'offline': 'O',
+    'down': 'D',
+    'reserve': 'R',
+    'job-exclusive': 'E',
+    'job-sharing': 'S',
+    'time-shared': 'T',
+    'state-unknown': 'U'
+}
+
+STATE_COLORS = {
+    'F': Color.GREEN,
+    'O': Color.GRAY,
+    'D': Color.RED,
+    'R': Color.TEAL,
+    'E': Color.BLUE,
+    'S': Color.TEAL,
+    'T': Color.TEAL,
+    'U': Color.RED
 }
 
 STATE_CHARS = ['F', 'O', 'D', 'R', 'E', 'S', 'T', 'U']
