@@ -39,10 +39,20 @@ class Parser:
     def handle_node(self, node):
         name = self.handle_node_name(node.getElementsByTagName("name")[0])
         procs = self.handle_node_procs(node.getElementsByTagName("np")[0])
-        gpus = self.handle_node_procs(node.getElementsByTagName("gpus")[0])
+
+        try:
+            gpus = self.handle_node_procs(node.getElementsByTagName("gpus")[0])
+        except:
+            gpus = ""
+
         state = self.handle_node_state(node.getElementsByTagName("state")[0])
-        properties = self.handle_node_state(
-            node.getElementsByTagName("properties")[0]).split(',')
+
+        try:
+            properties = self.handle_node_state(
+                node.getElementsByTagName("properties")[0]).split(',')
+        except:
+            properties = ""
+
         ntype = self.handle_node_state(node.getElementsByTagName("ntype")[0])
 
         try:
