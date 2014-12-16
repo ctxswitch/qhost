@@ -4,7 +4,7 @@
 Gridengine qhost replacement for PBS based systems. Summarize pbsnodes output in a quick list. View execution node information such as processors, running jobs, memory stats, and state.
 
 ## Current Version
-1.3.0
+1.3.1
 
 ## Changes
 There are several significant changes in output and functionality in 1.2.x and 1.3.x.  The state is now displayed as an offset character representing the 8 possible PBS states.  This was done for two reasons: 1) make the output easier to scan, and 2) keep the lines a static length when multiple states were present (i.e. job-exclusive and down/offline).  
