@@ -52,7 +52,7 @@ n034               linux   8   0   33.4G    2.0G     0    0    0.04   | F
 n044               linux   8   0   33.4G    2.1G     0    0    0.0    | F
 n054               linux   8   0   33.4G    2.6G     0    0    0.0    | F
 n064               linux   8   0   33.4G    22.7G    1    1    1.0    | F
-$ qhost -X -j -J 1158770
+$ qhost -j -J 1158770
 NODE               OS      CPU GPU MEMTOT   MEMUSE   JOBS SLOT LOAD    STATE
 --------------------------------------------------------------------------------
 n057               linux   8   0   33.4G    1.6G     1    8    8.25   |     E
