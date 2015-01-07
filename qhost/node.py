@@ -54,4 +54,13 @@ class Node:
         # to convert them to chars.  Sort these so out of order arrays
         # can still return true when we intersect the sets.
         state = sorted(list(states))
-        return list(set(self.state) & set(state)) == self.state
+        # print 'begin'
+        #print 'compare1:', states
+        #print 'compare',  set(list(set(self.state) & set(state)))
+        #print 'self.state', self.state
+        #print 'type self.state', type(self.state)
+        # print 'end'
+        # print (list(set(self.state) & set(state)) <= self.state), list(set(self.state) & set(state))
+        # compare the intersection of state_to_filter to self.state
+        return set(self.state) & set(state) == set(self.state)
+        #return list(set(self.state) & set(state)) <= self.state and list(set(self.state) & set(state))
