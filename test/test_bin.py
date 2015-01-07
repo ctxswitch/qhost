@@ -43,6 +43,23 @@ class TestBin(unittest.TestCase):
         ).read()
         self.assertEquals(actual, expected)
 
+    def test_filter_by_state_ODE(self):
+        '''
+        State filter on 'ODE' 
+        '''
+        top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
+        cmd = [
+            os.path.join(top, 'bin', 'qhost'),
+            '-X',
+            os.path.join(top, 'test', 'output', 'output_05.xml'),
+            '-s DEO',
+        ]
+        actual = os.popen(' '.join(cmd)).read()
+        expected = open(
+            os.path.join(top, 'test', 'output', 'output_05.txt')
+        ).read()
+        self.assertEquals(actual, expected)
+
     def test_filter_by_state_and_node(self):
         top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
         cmd = [

@@ -55,5 +55,5 @@ class Node:
         # can still return true when we intersect the sets.
         compare_state = sorted(list(states))
 
-        # compare the intersection set to the set self.state
+        # compare the intersection set to the self.state set
         return set(self.state) & set(compare_state) == set(self.state)
