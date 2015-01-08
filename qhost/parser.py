@@ -66,7 +66,7 @@ class Parser:
 
             jb = []
             for item in j:
-              jb.append(item.split(','))
+                jb.append(item.split(','))
             # flatten the list of lists
             jb = [item for sublist in jb for item in sublist]
 
