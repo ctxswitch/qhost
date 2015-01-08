@@ -70,7 +70,7 @@ class Parser:
             # flatten the list of lists
             jb = [item for sublist in jb for item in sublist]
 
-            jobs = map(lambda x: x.split('/')[1].split('.')[0], j)
+            jobs = map(lambda x: x.split('/')[1].split('.')[0], jb)
         else:
             jobs = []
 
