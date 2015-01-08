@@ -63,8 +63,13 @@ class Parser:
 
         if node.getElementsByTagName("jobs"):
             j = self.handle_node_jobs(node.getElementsByTagName("jobs")[0])
-            jb = j[0].split(',')
-            jobs = map(lambda x: x.split('/')[1].split('.')[0], jb)
+
+            jb = []
+            for item in j:
+              jb.append(item.split(','))
+            jb = [item for sublist in jb for item in sublist]  # flatten the list of lists
+
+            jobs = map(lambda x: x.split('/')[1].split('.')[0], j)
         else:
             jobs = []
 
