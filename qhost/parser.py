@@ -67,7 +67,8 @@ class Parser:
             jb = []
             for item in j:
               jb.append(item.split(','))
-            jb = [item for sublist in jb for item in sublist]  # flatten the list of lists
+            # flatten the list of lists
+            jb = [item for sublist in jb for item in sublist]
 
             jobs = map(lambda x: x.split('/')[1].split('.')[0], j)
         else:
