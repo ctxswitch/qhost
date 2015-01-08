@@ -63,7 +63,8 @@ class Parser:
 
         if node.getElementsByTagName("jobs"):
             j = self.handle_node_jobs(node.getElementsByTagName("jobs")[0])
-            jobs = map(lambda x: x.split('/')[1].split('.')[0], j)
+            jb = j[0].split(',')
+            jobs = map(lambda x: x.split('/')[1].split('.')[0], jb)
         else:
             jobs = []
 
