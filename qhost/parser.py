@@ -140,7 +140,8 @@ class Parser:
         return retval
 
     def handle_node_jobs(self, node):
-        return self.getText(node.childNodes).split(', ')
+        data = self.getText(node.childNodes).split(',')
+        return map(lambda x: x.lstrip(), data)
 
     def getText(self, nodelist):
         rc = ""
