@@ -63,14 +63,7 @@ class Parser:
 
         if node.getElementsByTagName("jobs"):
             j = self.handle_node_jobs(node.getElementsByTagName("jobs")[0])
-
-            jb = []
-            for item in j:
-                jb.append(item.split(','))
-            # flatten the list of lists
-            jb = [item for sublist in jb for item in sublist]
-
-            jobs = map(lambda x: x.split('/')[1].split('.')[0], jb)
+            jobs = map(lambda x: x.split('/')[1].split('.')[0], j)
         else:
             jobs = []
 
@@ -147,7 +140,8 @@ class Parser:
         return retval
 
     def handle_node_jobs(self, node):
-        return self.getText(node.childNodes).split(', ')
+        data = self.getText(node.childNodes).split(',')
+        return map(lambda x: x.lstrip(), data)
 
     def getText(self, nodelist):
         rc = ""
