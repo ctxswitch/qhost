@@ -25,11 +25,12 @@ class Display:
     RESET = 5
 
     def __init__(self, color=False, showjobs=False, showprops=False,
-                 showtype=False):
+                 showtype=False, shownote=False):
         self.color = color
         self.showjobs = showjobs
         self.showprops = showprops
         self.showtype = showtype
+        self.shownote = shownote
 
     def list(self, nodelist):
         print self.header()
@@ -46,11 +47,17 @@ class Display:
             print self.joblines(node)
 
     def header(self):
-        line = "%-18s %-7s %-3s %-3s %-8s %-8s %-4s %-4s %-6s  %-8s\n" % (
+        line = "%-18s %-7s %-3s %-3s %-8s %-8s %-4s %-4s %-6s  %-8s" % (
             "NODE", "OS", "CPU", "GPU", "MEMTOT",
             "MEMUSE", "JOBS", "SLOT", "LOAD", "STATE"
         )
+        if self.shownote:
+            line += "    %-17s" % "NOTE"
+        line += "\n"
         line += "-" * 80
+        if self.shownote:
+            line += "-" * 20
+
         return line
 
     def nodeline(self, node):
@@ -66,6 +73,8 @@ class Display:
             self.ratio(node.loadave, node.procs, pad=6),
             self.state(node.state, pad=8)
         )
+        if self.shownote and node.note:
+            line += '| ' + node.note
         return line
 
     def joblines(self, node):
@@ -117,7 +126,9 @@ class Display:
         return self.out("%3.1f%s" % (val, unit), pad=pad)
 
     def state(self, values, pad=0):
-        arr = [" "] * 8
+        arr = [" "] * 9
+        if 'N' in values: 
+            values.remove('N')
         for s in values:
             arr[STATE_CHARS.index(s)] = s
 

@@ -57,3 +57,11 @@ class Node:
 
         # compare the intersection set to the self.state set
         return set(self.state) & set(compare_state) == set(self.state)
+
+    def state_has_subset(self, states):
+        # This time we check is the state is a subset of the match    
+        # This grabs more nodes matching 'any' of the criteria
+        compare_state = sorted(list(states))
+
+        # check if compare_state is a subset of self.state
+        return (set(compare_state)).issubset(set(self.state))

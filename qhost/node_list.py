@@ -47,3 +47,6 @@ class NodeList:
 
     def filter_by_state(self, node, state):
         return node.state_matches(state)
+
+    def filter_by_subset(self, node, state):
+        return node.state_has_subset(state)

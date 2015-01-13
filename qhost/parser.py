@@ -56,6 +56,11 @@ class Parser:
         ntype = self.handle_node_state(node.getElementsByTagName("ntype")[0])
 
         try:
+            note = self.handle_node_state(node.getElementsByTagName("note")[0])
+        except:
+            note = ""
+
+        try:
             status = self.handle_node_status(
                 node.getElementsByTagName("status")[0])
         except:
@@ -70,7 +75,10 @@ class Parser:
         node = Node(name)
         node.procs = procs
         node.gpus = gpus
+        node.note = note
         node.state = sorted(map(lambda x: STATES[x][0], state.split(',')))
+        if note:
+            node.state.append('N')
         node.properties = properties
         node.ntype = ntype
         node.slots = len(jobs)

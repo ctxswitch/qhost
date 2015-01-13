@@ -44,6 +44,10 @@ def get_options():
         action="store_true", dest="ntype", default=False,
         help="show node type information")
     parser.add_option(
+        "-N", "--note",
+        action="store_true", dest="note", default=False,
+        help="show note information")
+    parser.add_option(
         "-p", "--properties",
         action="store_true", dest="properties", default=False,
         help="show node properties")
@@ -64,6 +68,11 @@ def get_options():
              "U (state-unknown)."
     )
     parser.add_option(
+        "-S", "--subset",
+        dest="subset", default=None,
+        help="Same as 'state' above, but matches 'any' condition"
+    )
+    parser.add_option(
         "-X", "--xmlfile",
         dest="xmlfile", default=None,
         help="Use an XML file containing the pbsnodes output instead of " +
@@ -80,6 +89,10 @@ def get_options():
         options.jobs = True
         options.properties = True
         options.ntype = True
+
+    # If you are wanting check on state N 'has-note' you probably want the note field also
+    if options.subset == 'N': 
+        options.note = True
 
     if len(args) > 0:
         options.node_regex = args[0]
@@ -106,6 +119,7 @@ def run(options):
     qp = qhost.Parser(xml)
     nodelist = qp.parse()
     nodelist.add_filter("state", options.state)
+    nodelist.add_filter("subset", options.subset)
     nodelist.add_filter("node_regex", options.node_regex)
     nodelist.add_filter("jobid", options.jobid)
 
@@ -113,7 +127,8 @@ def run(options):
         color=options.color,
         showjobs=options.jobs,
         showprops=options.properties,
-        showtype=options.ntype
+        showtype=options.ntype,
+        shownote=options.note
     )
     display.list(nodelist)
 
