@@ -127,7 +127,7 @@ class Display:
 
     def state(self, values, pad=0):
         arr = [" "] * 9
-        if 'N' in values: 
+        if 'N' in values:
             values.remove('N')
         for s in values:
             arr[STATE_CHARS.index(s)] = s

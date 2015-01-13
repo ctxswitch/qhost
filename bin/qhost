@@ -90,8 +90,8 @@ def get_options():
         options.properties = True
         options.ntype = True
 
-    # If you are wanting check on state N 'has-note' you probably want the note field also
-    if options.subset == 'N': 
+    # Checks on state N 'has-note' --> note field should display
+    if options.subset == 'N':
         options.note = True
 
     if len(args) > 0:
