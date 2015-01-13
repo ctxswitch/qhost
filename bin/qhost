@@ -91,7 +91,7 @@ def get_options():
         options.ntype = True
 
     # Checks on state N 'has-note' --> note field should display
-    if options.subset == 'N':
+    if 'N' in options.subset:
         options.note = True
 
     if len(args) > 0:
