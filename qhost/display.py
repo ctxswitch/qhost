@@ -52,7 +52,7 @@ class Display:
             "MEMUSE", "JOBS", "SLOT", "LOAD", "STATE"
         )
         if self.shownote:
-            line += "    %-17s" % "NOTE"
+            line += "   %-17s" % "NOTE"
         line += "\n"
         line += "-" * 80
         if self.shownote:
