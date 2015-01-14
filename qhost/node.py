@@ -28,6 +28,7 @@ class Node:
         self.availmem = 0
         self.procs = 0
         self.jobs = []
+        self.note = ''
         self.loadave = 0
         self.os = ''
         self.gpus = 0
@@ -44,6 +45,9 @@ class Node:
     def has_job(self, jobid):
         return jobid in self.jobs
 
+    def has_note(self):
+        return self.note
+
     def matches(self, regex):
         match = re.compile(regex)
         return not match.search(self.name) is None
@@ -57,3 +61,11 @@ class Node:
 
         # compare the intersection set to the self.state set
         return set(self.state) & set(compare_state) == set(self.state)
+
+    def state_has_subset(self, states):
+        # This time we check is the state is a subset of the match
+        # This grabs more nodes matching 'any' of the criteria
+        compare_state = sorted(list(states))
+
+        # check if compare_state is a subset of self.state
+        return (set(compare_state)).issubset(set(self.state))

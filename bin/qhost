@@ -38,11 +38,19 @@ def get_options():
     parser.add_option(
         "-J", "--jobid",
         dest="jobid", default=None,
-        help="Only show nodes used by the specified job ID.")
+        help="only show nodes used by the specified job ID")
     parser.add_option(
         "-n", "--ntype",
         action="store_true", dest="ntype", default=False,
         help="show node type information")
+    parser.add_option(
+        "-N", "--note",
+        action="store_true", dest="note", default=False,
+        help="show note information")
+    parser.add_option(
+        "--NO", "--note-only",
+        action="store_true", dest="noteonly", default=False,
+        help="show nodes with notes only")
     parser.add_option(
         "-p", "--properties",
         action="store_true", dest="properties", default=False,
@@ -54,19 +62,24 @@ def get_options():
     parser.add_option(
         "-v", "--version",
         action="store_true", dest="version", default=False,
-        help="Print version and exit.")
+        help="print version and exit")
     parser.add_option(
         "-s", "--state",
         dest="state", default=None,
-        help="Filter nodes by state. Valid state characters are F (free), " +
+        help="filter nodes by state; valid state characters are F (free), " +
              "O (offline), D (down), R (reserve), E (job-exclusive), " +
              "S (job-sharing), B (busy), T (time-shared), and " +
              "U (state-unknown)."
     )
     parser.add_option(
+        "-S", "--subset",
+        dest="subset", default=None,
+        help="same as 'state' above, but matches 'any' condition"
+    )
+    parser.add_option(
         "-X", "--xmlfile",
         dest="xmlfile", default=None,
-        help="Use an XML file containing the pbsnodes output instead of " +
+        help="use an XML file containing the pbsnodes output instead of " +
              "pbsnodes."
     )
 
@@ -80,6 +93,9 @@ def get_options():
         options.jobs = True
         options.properties = True
         options.ntype = True
+
+    if options.noteonly:
+        options.note = True
 
     if len(args) > 0:
         options.node_regex = args[0]
@@ -106,14 +122,17 @@ def run(options):
     qp = qhost.Parser(xml)
     nodelist = qp.parse()
     nodelist.add_filter("state", options.state)
+    nodelist.add_filter("subset", options.subset)
     nodelist.add_filter("node_regex", options.node_regex)
     nodelist.add_filter("jobid", options.jobid)
+    nodelist.add_filter("note", options.noteonly)
 
     display = qhost.Display(
         color=options.color,
         showjobs=options.jobs,
         showprops=options.properties,
-        showtype=options.ntype
+        showtype=options.ntype,
+        shownote=options.note
     )
     display.list(nodelist)
 

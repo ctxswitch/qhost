@@ -25,11 +25,12 @@ class Display:
     RESET = 5
 
     def __init__(self, color=False, showjobs=False, showprops=False,
-                 showtype=False):
+                 showtype=False, shownote=False):
         self.color = color
         self.showjobs = showjobs
         self.showprops = showprops
         self.showtype = showtype
+        self.shownote = shownote
 
     def list(self, nodelist):
         print self.header()
@@ -37,7 +38,12 @@ class Display:
             self.display_node(node)
 
     def display_node(self, node):
-        print self.nodeline(node)
+        if self.shownote:
+            print self.nodeline(node),
+            print self.noteline(node)
+        else:
+            print self.nodeline(node)
+
         if self.showprops and len(node.properties) > 0:
             print self.proplines(node)
         if self.showtype and len(node.ntype) > 0:
@@ -46,11 +52,17 @@ class Display:
             print self.joblines(node)
 
     def header(self):
-        line = "%-18s %-7s %-3s %-3s %-8s %-8s %-4s %-4s %-6s  %-8s\n" % (
+        line = "%-18s %-7s %-3s %-3s %-8s %-8s %-4s %-4s %-6s  %-8s" % (
             "NODE", "OS", "CPU", "GPU", "MEMTOT",
             "MEMUSE", "JOBS", "SLOT", "LOAD", "STATE"
         )
+        if self.shownote:
+            line += "   %-17s" % "NOTE"
+        line += "\n"
         line += "-" * 80
+        if self.shownote:
+            line += "-" * 20
+
         return line
 
     def nodeline(self, node):
@@ -66,6 +78,16 @@ class Display:
             self.ratio(node.loadave, node.procs, pad=6),
             self.state(node.state, pad=8)
         )
+
+        return line
+
+    def noteline(self, node):
+        line = ''
+        if self.shownote:
+            line = '| '
+        if self.shownote and node.note:
+            line += node.note
+
         return line
 
     def joblines(self, node):
