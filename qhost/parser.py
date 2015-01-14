@@ -77,8 +77,6 @@ class Parser:
         node.gpus = gpus
         node.note = note
         node.state = sorted(map(lambda x: STATES[x][0], state.split(',')))
-        if note:
-            node.state.append('N')
         node.properties = properties
         node.ntype = ntype
         node.slots = len(jobs)

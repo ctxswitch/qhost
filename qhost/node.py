@@ -28,6 +28,7 @@ class Node:
         self.availmem = 0
         self.procs = 0
         self.jobs = []
+        self.note = ''
         self.loadave = 0
         self.os = ''
         self.gpus = 0
@@ -43,6 +44,9 @@ class Node:
 
     def has_job(self, jobid):
         return jobid in self.jobs
+
+    def has_note(self):
+        return self.note
 
     def matches(self, regex):
         match = re.compile(regex)

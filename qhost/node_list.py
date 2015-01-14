@@ -42,6 +42,9 @@ class NodeList:
     def filter_by_jobid(self, node, jobid):
         return node.has_job(jobid)
 
+    def filter_by_note(self, node, shownote):
+        return node.has_note()
+
     def filter_by_node_regex(self, node, regex):
         return node.matches(regex)
 
@@ -50,3 +53,4 @@ class NodeList:
 
     def filter_by_subset(self, node, state):
         return node.state_has_subset(state)
+

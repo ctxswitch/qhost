@@ -48,6 +48,10 @@ def get_options():
         action="store_true", dest="note", default=False,
         help="show note information")
     parser.add_option(
+        "--NO", "--note-only",
+        action="store_true", dest="noteonly", default=False,
+        help="show nodes with notes only")
+    parser.add_option(
         "-p", "--properties",
         action="store_true", dest="properties", default=False,
         help="show node properties")
@@ -90,10 +94,8 @@ def get_options():
         options.properties = True
         options.ntype = True
 
-    # Checks on state N 'has-note' --> note field should display
-    if options.subset:
-        if 'N' in options.subset:
-            options.note = True
+    if options.noteonly:
+        options.note = True
 
     if len(args) > 0:
         options.node_regex = args[0]
@@ -123,6 +125,7 @@ def run(options):
     nodelist.add_filter("subset", options.subset)
     nodelist.add_filter("node_regex", options.node_regex)
     nodelist.add_filter("jobid", options.jobid)
+    nodelist.add_filter("note", options.noteonly)
 
     display = qhost.Display(
         color=options.color,

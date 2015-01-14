@@ -38,7 +38,12 @@ class Display:
             self.display_node(node)
 
     def display_node(self, node):
-        print self.nodeline(node)
+        if self.shownote:
+            print self.nodeline(node),
+            print self.noteline(node)
+        else:
+            print self.nodeline(node)
+
         if self.showprops and len(node.properties) > 0:
             print self.proplines(node)
         if self.showtype and len(node.ntype) > 0:
@@ -73,8 +78,16 @@ class Display:
             self.ratio(node.loadave, node.procs, pad=6),
             self.state(node.state, pad=8)
         )
+
+        return line
+
+    def noteline(self, node):
+        line = ''
+        if self.shownote:
+            line = '| '
         if self.shownote and node.note:
-            line += '| ' + node.note
+            line += node.note
+
         return line
 
     def joblines(self, node):
@@ -126,9 +139,8 @@ class Display:
         return self.out("%3.1f%s" % (val, unit), pad=pad)
 
     def state(self, values, pad=0):
-        arr = [" "] * 9
-        if 'N' in values:
-            values.remove('N')
+        arr = [" "] * 8
+
         for s in values:
             arr[STATE_CHARS.index(s)] = s
 
