@@ -140,11 +140,10 @@ class Display:
 
     def state(self, values, pad=0):
         arr = [" "] * 8
-
         for s in values:
             arr[STATE_CHARS.index(s)] = s
 
-        msg = ''.join(arr[:8])
+        msg = ''.join(arr)
 
         if self.color:
             """Use the first states color for all"""

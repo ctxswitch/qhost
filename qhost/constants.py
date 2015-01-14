@@ -27,7 +27,7 @@ STATES = {
     'job-exclusive': 'E',
     'job-sharing': 'S',
     'time-shared': 'T',
-    'state-unknown': 'U',
+    'state-unknown': 'U'
 }
 
 STATE_COLORS = {
@@ -38,7 +38,7 @@ STATE_COLORS = {
     'E': Color.BLUE,
     'S': Color.TEAL,
     'T': Color.TEAL,
-    'U': Color.RED,
+    'U': Color.RED
 }
 
 STATE_CHARS = ['F', 'O', 'D', 'R', 'E', 'S', 'T', 'U']
