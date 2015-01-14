@@ -53,4 +53,3 @@ class NodeList:
 
     def filter_by_subset(self, node, state):
         return node.state_has_subset(state)
-
