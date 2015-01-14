@@ -68,8 +68,8 @@ def get_options():
         dest="state", default=None,
         help="filter nodes by state; valid state characters are F (free), " +
              "O (offline), D (down), R (reserve), E (job-exclusive), " +
-             "S (job-sharing), B (busy), T (time-shared), " +
-             "U (state-unknown), and N (has-note)."
+             "S (job-sharing), B (busy), T (time-shared), and " +
+             "U (state-unknown)."
     )
     parser.add_option(
         "-S", "--subset",
