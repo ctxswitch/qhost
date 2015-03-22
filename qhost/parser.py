@@ -42,8 +42,8 @@ class Parser:
 
     def handle_node(self, node):
         name = StringParser(node, "name").parse()
-
         n = Node(name)
+        
         n.procs = IntParser(node, "np", default=0).parse()
         n.gpus = IntParser(node, "gpus", default=0).parse()
         n.properties = StringParser(node, "properties").parse()
