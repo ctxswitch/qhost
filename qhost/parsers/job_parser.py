@@ -11,34 +11,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from color import Color
+from base import Base
 
 
-VERSION = '1.3.1'
+class JobParser(Base):
+    def __init__(self, node, tagname, default=""):
+        self.tagname = tagname
+        self.node = node
+        self.default = ([], 0)
 
-# Valid states are free, offline, down, reserve,
-# job-exclusive, job-sharing, busy, time-shared,
-# or state-unknown.
-STATES = {
-    'free': 'F',
-    'offline': 'O',
-    'down': 'D',
-    'reserve': 'R',
-    'job-exclusive': 'E',
-    'job-sharing': 'S',
-    'time-shared': 'T',
-    'state-unknown': 'U'
-}
-
-STATE_COLORS = {
-    'F': Color.GREEN,
-    'O': Color.GRAY,
-    'D': Color.RED,
-    'R': Color.TEAL,
-    'E': Color.BLUE,
-    'S': Color.TEAL,
-    'T': Color.TEAL,
-    'U': Color.RED
-}
-
-STATE_CHARS = ['F', 'O', 'D', 'R', 'E', 'S', 'T', 'U']
+    def convert(self, value):
+        jobs = value.split(', ')
+        mapped = map(lambda x: x.split('/')[1].split('.')[0], jobs)
+        return (set(mapped), len(jobs))
