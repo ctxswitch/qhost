@@ -21,6 +21,6 @@ class JobParser(Base):
         self.default = ([], 0)
 
     def convert(self, value):
-        jobs = value.split(', ')
-        mapped = map(lambda x: x.split('/')[1].split('.')[0], jobs)
-        return (set(mapped), len(jobs))
+        jobs = value.split(',')
+        mapped_jobs = map(lambda x: x.split('/')[1].split('.')[0], jobs)
+        return (set(mapped_jobs), len(jobs))
