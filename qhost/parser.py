@@ -50,6 +50,7 @@ class Parser:
         n.ntype = StringParser(node, "ntype").parse()
         n.state = StateParser(node, "state").parse()
         n.jobs, n.slots = JobParser(node, "jobs").parse()
+        n.note = StringParser(node, "note", default='').parse()
 
         status = StatusParser(node, "status").parse()
         n.from_hash(status)

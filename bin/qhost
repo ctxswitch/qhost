@@ -50,7 +50,11 @@ def get_options():
     parser.add_option(
         "-a", "--all",
         action="store_true", dest="all", default=False,
-        help="show jobs, node properties, and type")
+        help="show jobs, node properties, notes, and type")
+    parser.add_option(
+        "-N", "--notes",
+        action="store_true", dest="notes", default=False,
+        help="show node notes")
     parser.add_option(
         "-v", "--version",
         action="store_true", dest="version", default=False,
@@ -80,6 +84,7 @@ def get_options():
         options.jobs = True
         options.properties = True
         options.ntype = True
+        options.notes = True
 
     if len(args) > 0:
         options.node_regex = args[0]
@@ -113,7 +118,8 @@ def run(options):
         color=options.color,
         showjobs=options.jobs,
         showprops=options.properties,
-        showtype=options.ntype
+        showtype=options.ntype,
+        shownote=options.notes
     )
     display.list(nodelist)
 

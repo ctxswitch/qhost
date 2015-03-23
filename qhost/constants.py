@@ -13,7 +13,7 @@
 # limitations under the License.
 from color import Color
 
-VERSION = '1.3.3'
+VERSION = '1.4.0'
 
 # Valid states are free, offline, down, reserve,
 # job-exclusive, job-sharing, busy, time-shared,

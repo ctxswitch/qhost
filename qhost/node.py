@@ -34,6 +34,7 @@ class Node:
         self.properties = []
         self.ntype = ''
         self.slots = 0
+        self.note = ''
 
     def __repr__(self):
         return self.name
@@ -47,6 +48,9 @@ class Node:
 
     def has_job(self, jobid):
         return jobid in self.jobs
+
+    def has_note(self):
+        return self.note != ""
 
     def matches(self, regex):
         match = re.compile(regex)

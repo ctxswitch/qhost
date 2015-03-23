@@ -45,7 +45,7 @@ class TestBin(unittest.TestCase):
 
     def test_filter_by_state_ODE(self):
         '''
-        State filter on 'ODE' 
+        State filter on 'ODE'
         '''
         top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
         cmd = [
@@ -100,5 +100,32 @@ class TestBin(unittest.TestCase):
         actual = os.popen(' '.join(cmd)).read()
         expected = open(
             os.path.join(top, 'test', 'output', 'output_04_5.txt')
+        ).read()
+        self.assertEquals(actual, expected)
+
+    def test_job_note_notification(self):
+        top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
+        cmd = [
+            os.path.join(top, 'bin', 'qhost'),
+            '-X',
+            os.path.join(top, 'test', 'output', 'output_06.xml')
+        ]
+        actual = os.popen(' '.join(cmd)).read()
+        expected = open(
+            os.path.join(top, 'test', 'output', 'output_06_1.txt')
+        ).read()
+        self.assertEquals(actual, expected)
+
+    def test_job_note_display(self):
+        top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
+        cmd = [
+            os.path.join(top, 'bin', 'qhost'),
+            '-X',
+            os.path.join(top, 'test', 'output', 'output_06.xml'),
+            '-N'
+        ]
+        actual = os.popen(' '.join(cmd)).read()
+        expected = open(
+            os.path.join(top, 'test', 'output', 'output_06_2.txt')
         ).read()
         self.assertEquals(actual, expected)

@@ -25,11 +25,12 @@ class Display:
     RESET = 5
 
     def __init__(self, color=False, showjobs=False, showprops=False,
-                 showtype=False):
+                 showtype=False, shownote=False):
         self.color = color
         self.showjobs = showjobs
         self.showprops = showprops
         self.showtype = showtype
+        self.shownote = shownote
 
     def list(self, nodelist):
         print self.header()
@@ -44,9 +45,11 @@ class Display:
             print self.typelines(node)
         if self.showjobs and len(node.jobs) > 0:
             print self.joblines(node)
+        if self.shownote and node.has_note():
+            print self.notelines(node)
 
     def header(self):
-        line = "%-18s %-7s %-3s %-3s %-8s %-8s %-4s %-4s %-6s  %-8s\n" % (
+        line = "%-17s  %-7s %-3s %-3s %-8s %-8s %-4s %-4s %-6s  %-8s\n" % (
             "NODE", "OS", "CPU", "GPU", "MEMTOT",
             "MEMUSE", "JOBS", "SLOT", "LOAD", "STATE"
         )
@@ -54,8 +57,9 @@ class Display:
         return line
 
     def nodeline(self, node):
-        line = "%s %s %s %s %s %s %s %s %s | %s" % (
-            self.out(node.name, pad=18),
+        line = "%s%s %s %s %s %s %s %s %s %s | %s" % (
+            self.out(node.name, pad=17),
+            self.checkbox(node.has_note(), checkmark='*'),
             self.out(node.os, pad=7),
             self.out(node.procs, pad=3),
             self.out(node.gpus, pad=3),
@@ -85,6 +89,12 @@ class Display:
         line = " " * 19
         line += self.pad("Node Type", 12) + ": "
         line += node.ntype
+        return self.out(line, color=Color.GRAY)
+
+    def notelines(self, node):
+        line = " " * 19
+        line += self.pad("Note", 12) + ": "
+        line += node.note
         return self.out(line, color=Color.GRAY)
 
     def seperator(self):
@@ -137,6 +147,15 @@ class Display:
             value = Color.ratio(value, maxval)
 
         return value
+
+    def checkbox(self, value, checkmark='*'):
+        if not value:
+            return ' '
+
+        if self.color:
+            return Color.message(checkmark, Color.TEAL)
+        else:
+            return checkmark
 
     def pad(self, msg, size, label=None):
         msg = str(msg)
