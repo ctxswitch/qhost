@@ -1,0 +1,3 @@
+NODE               OS      CPU GPU MEMTOT   MEMUSE   JOBS SLOT LOAD    STATE   
+--------------------------------------------------------------------------------
+node100            linux   32      137.6G   82.0G    3    32   41.81  |  OD E   
