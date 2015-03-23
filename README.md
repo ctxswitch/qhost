@@ -4,14 +4,21 @@
 Gridengine qhost replacement for PBS based systems. Summarize pbsnodes output in a quick list. View execution node information such as processors, running jobs, memory stats, and state.
 
 ## Current Version
-1.3.3
+1.4.0
 
-## Changes
-There are several significant changes in output and functionality in 1.2.x and 1.3.x.  The state is now displayed as an offset character representing the 8 possible PBS states.  This was done for two reasons: 1) make the output easier to scan, and 2) keep the lines a static length when multiple states were present (i.e. job-exclusive and down/offline).  
+## Changes in 1.4.0
+The default state matching behavior has changed to match the passed states to any of the nodes states.  There are also two new options.  The first, explained below is the ```-x``` or exclusive option that provides the exclusive matching that was previously used.  The second option is the ```-N``` or note option which will display any notes in the extended attribute space.  The final change is that any node which has a note associated with it will display an asterisk ```*``` to the left of the hostname and before the OS column.
 
-The other significant change is the addition of filters.  Using the ```state``` or ```s``` option, you can pass in the same characters used to represent state in the output to filter and display the nodes in the specified states.  The default is to display all states.  The ```jobid``` or ```j``` options can be used to filter based on a specific job id.  For the final argument you can provide a regular expression for node name matching.  The expression will match any part of the node unless you specify the beginning and end of the pattern (i.e. "^n.*4$") Some examples are:
+## Filters
 
-```sh
+* Using the ```state``` or ```s``` option, you can pass in the same characters used to represent state in the output to filter and display the nodes in the specified states.  The default is to display all states.  
+* The state filter can be combined with the ```exclusive``` or ```x``` option.  This option will only match if the given states match exactly to the state of the node.  
+* The ```jobid``` or ```j``` options can be used to filter based on a specific job id.  For the final argument you can provide a regular expression for node name matching.  The expression will match any part of the node unless you specify the beginning and end of the pattern (i.e. "^n.*4$") Some examples are:
+
+### Examples
+
+#### Match the nodes with 1 or 5 as the third character.
+```
 $ qhost n0[15]
 NODE               OS      CPU GPU MEMTOT   MEMUSE   JOBS SLOT LOAD    STATE
 --------------------------------------------------------------------------------
@@ -35,6 +42,10 @@ n056               linux   8   0   33.4G    1.6G     0    0    0.0    | F
 n057               linux   8   0   33.4G    1.6G     1    8    8.25   |     E
 n058               linux   8   0   33.4G    3.1G     1    8    8.02   |     E
 n059               linux   8   0   33.4G    2.5G     1    8    8.0    |     E
+```
+
+#### Match nodes in the last query in the states O or E
+```
 $ qhost -s OE n0[15]
 NODE               OS      CPU GPU MEMTOT   MEMUSE   JOBS SLOT LOAD    STATE
 --------------------------------------------------------------------------------
@@ -42,6 +53,10 @@ n014               linux   8   0   33.4G    1.1G     0    0    0.0    |  O
 n057               linux   8   0   33.4G    1.6G     1    8    8.25   |     E
 n058               linux   8   0   33.4G    3.1G     1    8    8.02   |     E
 n059               linux   8   0   33.4G    2.5G     1    8    8.0    |     E
+```
+
+#### Match a node name starting with n and ending with the number 4
+```
 $ qhost "^n.*4$"
 NODE               OS      CPU GPU MEMTOT   MEMUSE   JOBS SLOT LOAD    STATE
 --------------------------------------------------------------------------------
@@ -52,6 +67,10 @@ n034               linux   8   0   33.4G    2.0G     0    0    0.04   | F
 n044               linux   8   0   33.4G    2.1G     0    0    0.0    | F
 n054               linux   8   0   33.4G    2.6G     0    0    0.0    | F
 n064               linux   8   0   33.4G    22.7G    1    1    1.0    | F
+```
+
+#### Match a job while displaying the job information for the node.
+```
 $ qhost -j -J 1158770
 NODE               OS      CPU GPU MEMTOT   MEMUSE   JOBS SLOT LOAD    STATE
 --------------------------------------------------------------------------------
@@ -63,6 +82,25 @@ n059               linux   8   0   33.4G    2.5G     1    8    8.0    |     E
                    Jobs        : 1158770
 n060               linux   8   0   33.4G    1.9G     1    8    8.08   |     E
                    Jobs        : 1158770
+```
+
+#### Match the nodes with states E
+```
+$ qhost -s E
+NODE               OS      CPU GPU MEMTOT   MEMUSE   JOBS SLOT LOAD    STATE
+--------------------------------------------------------------------------------
+node150            linux   12  0   23.5G    8.1G     1    12   12.01  |     E
+node163            linux   12  0   23.5G    5.9G     4    12   12.0   |  O  E
+node164          * linux   12  0   23.5G    5.0G     1    12   12.0   |     E
+```
+
+#### Match the nodes with only the state E and in no other state
+```
+$ qhost -s E -x
+NODE               OS      CPU GPU MEMTOT   MEMUSE   JOBS SLOT LOAD    STATE
+--------------------------------------------------------------------------------
+node150            linux   12  0   23.5G    8.1G     1    12   12.01  |     E  
+node164          * linux   12  0   23.5G    5.0G     1    12   12.0   |     E
 ```
 
 ## Install
