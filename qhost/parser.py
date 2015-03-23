@@ -21,6 +21,7 @@ from parsers import StateParser
 from parsers import JobParser
 from parsers import StatusParser
 
+
 class Parser:
     def __init__(self, qxml):
         self.qxml = qxml
