@@ -56,12 +56,11 @@ class Node:
         match = re.compile(regex)
         return not match.search(self.name) is None
 
-    def state_matches(self, states):
-        # States come in as human readable, there's a good chance
-        # this will change in the future, but for right now we need
-        # to convert them to chars.  Sort these so out of order arrays
-        # can still return true when we intersect the sets.
+    def state_exclusive_matches(self, states):
         compare_state = sorted(list(states))
-
         # compare the intersection set to the self.state set
         return set(self.state) & set(compare_state) == set(self.state)
+
+    def state_any_matches(self, states):
+        compare_state = list(states)
+        return set(compare_state) <= set(self.state)

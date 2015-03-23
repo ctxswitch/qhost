@@ -35,7 +35,7 @@ class TestBin(unittest.TestCase):
             os.path.join(top, 'bin', 'qhost'),
             '-X',
             os.path.join(top, 'test', 'output', 'output_04.xml'),
-            '-s EO',
+            '-s EO -x',
         ]
         actual = os.popen(' '.join(cmd)).read()
         expected = open(
@@ -66,7 +66,7 @@ class TestBin(unittest.TestCase):
             os.path.join(top, 'bin', 'qhost'),
             '-X',
             os.path.join(top, 'test', 'output', 'output_04.xml'),
-            '-s EO',
+            '-s EO -x',
             'n0[35]'
         ]
         actual = os.popen(' '.join(cmd)).read()
@@ -127,5 +127,33 @@ class TestBin(unittest.TestCase):
         actual = os.popen(' '.join(cmd)).read()
         expected = open(
             os.path.join(top, 'test', 'output', 'output_06_2.txt')
+        ).read()
+        self.assertEquals(actual, expected)
+
+    def test_any_state_display(self):
+        top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
+        cmd = [
+            os.path.join(top, 'bin', 'qhost'),
+            '-X',
+            os.path.join(top, 'test', 'output', 'output_07.xml'),
+            '-s E'
+        ]
+        actual = os.popen(' '.join(cmd)).read()
+        expected = open(
+            os.path.join(top, 'test', 'output', 'output_07_1.txt')
+        ).read()
+        self.assertEquals(actual, expected)
+
+    def test_exclusive_state_display(self):
+        top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
+        cmd = [
+            os.path.join(top, 'bin', 'qhost'),
+            '-X',
+            os.path.join(top, 'test', 'output', 'output_07.xml'),
+            '-s E -x'
+        ]
+        actual = os.popen(' '.join(cmd)).read()
+        expected = open(
+            os.path.join(top, 'test', 'output', 'output_07_2.txt')
         ).read()
         self.assertEquals(actual, expected)

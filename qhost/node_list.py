@@ -45,5 +45,8 @@ class NodeList:
     def filter_by_node_regex(self, node, regex):
         return node.matches(regex)
 
-    def filter_by_state(self, node, state):
-        return node.state_matches(state)
+    def filter_by_any_state(self, node, state):
+        return node.state_any_matches(state)
+
+    def filter_by_exclusive_state(self, node, state):
+        return node.state_exclusive_matches(state)

@@ -65,14 +65,16 @@ def get_options():
         help="Filter nodes by state. Valid state characters are F (free), " +
              "O (offline), D (down), R (reserve), E (job-exclusive), " +
              "S (job-sharing), B (busy), T (time-shared), and " +
-             "U (state-unknown)."
-    )
+             "U (state-unknown).")
+    parser.add_option(
+        "-x", "--exclusive",
+        action="store_true", dest="exclusive", default=False,
+        help="When specifying the state, use exclusive matching.")
     parser.add_option(
         "-X", "--xmlfile",
         dest="xmlfile", default=None,
         help="Use an XML file containing the pbsnodes output instead of " +
-             "pbsnodes."
-    )
+             "pbsnodes.")
 
     (options, args) = parser.parse_args()
 
@@ -110,7 +112,10 @@ def run(options):
 
     qp = qhost.Parser(xml)
     nodelist = qp.parse()
-    nodelist.add_filter("state", options.state)
+    if options.exclusive:
+        nodelist.add_filter("exclusive_state", options.state)
+    else:
+        nodelist.add_filter("any_state", options.state)
     nodelist.add_filter("node_regex", options.node_regex)
     nodelist.add_filter("jobid", options.jobid)
 
