@@ -124,7 +124,9 @@ qhost \[options\] \[optional-node-regex\]
 * ```-a, --all``` - display all extended attributes including jobs, ntype and properties
 * ```-s STATE, --state=STATE``` - Filter nodes by state. Valid state characters are F (free), O (offline), D (down), R (reserve), E (job-exclusive), S (job-sharing), B (busy), T (time-shared), and U (state-unknown).
 * ```-J JOBID, --jobid=JOBID``` - Filter nodes by jobid.
+* ```-N, --notes``` - show node notes
 * ```-X XMLFILE, --xmlfile XMLFILE``` - use a previously stored xml file instead of calling pbsnodes
+* ```-x, --exclusive``` - when specifying the state, use exclusive matching
 * ```-v, --version``` - display the version and exit
 * ```-h, --help``` - display the help and exit
 
