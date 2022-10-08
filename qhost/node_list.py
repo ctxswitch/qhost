@@ -34,7 +34,7 @@ class NodeList:
             self.filters[filter] = value
 
     def matches(self, node):
-        for key, value in self.filters.iteritems():
+        for key, value in self.filters.items():
             if not getattr(self, "filter_by_%s" % key)(node, value):
                 return False
         return True

@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-# Copyright 2014, Rob Lyon <nosignsoflifehere@gmail.com>
+#!/usr/bin/env python3
+# Copyright 2014, Rob Lyon <rob@ctxswitch.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ from qhost.constants import VERSION
 setup(
     name='qhost',
     version=VERSION,
-    author='Rob Lyon <nosignsoflifehere@gmail.com>',
+    author='Rob Lyon <rob@ctxswitch.com>',
     url='http://rlyon.me',
     packages=['qhost'],
     scripts=['bin/qhost']

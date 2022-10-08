@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from base import Base
+from .base import Base
 
 
 class StatusParser(Base):
@@ -40,7 +40,7 @@ class StatusParser(Base):
         if 'nusers' in d:
             retval['nusers'] = int(d['nusers'])
         if 'sessions' in d:
-            retval['sessions'] = map(lambda x: int(x), d['sessions'].split())
+            retval['sessions'] = [int(x) for x in d['sessions'].split()]
         if 'nsessions' in d:
             retval['nsessions'] = int(d['nsessions'])
         if 'loadave' in d:

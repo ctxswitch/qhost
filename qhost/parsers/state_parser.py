@@ -11,10 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from base import Base
+from .base import Base
 from qhost.constants import STATES
 
 
 class StateParser(Base):
     def convert(self, value):
-        return sorted(map(lambda x: STATES[x][0], value.split(',')))
+        return sorted([STATES[x][0] for x in value.split(',')])
