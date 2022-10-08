@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Copyright 2014, Rob Lyon <nosignsoflifehere@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,7 @@ import os
 import sys
 from optparse import OptionParser
 
-lib_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../')
+lib_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")
 if lib_path not in sys.path:
     sys.path.insert(0, lib_path)
 import qhost
@@ -28,58 +28,98 @@ def get_options():
     usage = "usage: %prog [options] [optional-node-regex]"
     parser = OptionParser(usage=usage)
     parser.add_option(
-        "-c", "--color",
-        action="store_true", dest="color", default=False,
-        help="turn on colorized output")
+        "-c",
+        "--color",
+        action="store_true",
+        dest="color",
+        default=False,
+        help="turn on colorized output",
+    )
     parser.add_option(
-        "-j", "--jobs",
-        action="store_true", dest="jobs", default=False,
-        help="show job information")
+        "-j",
+        "--jobs",
+        action="store_true",
+        dest="jobs",
+        default=False,
+        help="show job information",
+    )
     parser.add_option(
-        "-J", "--jobid",
-        dest="jobid", default=None,
-        help="Only show nodes used by the specified job ID.")
+        "-J",
+        "--jobid",
+        dest="jobid",
+        default=None,
+        help="Only show nodes used by the specified job ID.",
+    )
     parser.add_option(
-        "-n", "--ntype",
-        action="store_true", dest="ntype", default=False,
-        help="show node type information")
+        "-n",
+        "--ntype",
+        action="store_true",
+        dest="ntype",
+        default=False,
+        help="show node type information",
+    )
     parser.add_option(
-        "-p", "--properties",
-        action="store_true", dest="properties", default=False,
-        help="show node properties")
+        "-p",
+        "--properties",
+        action="store_true",
+        dest="properties",
+        default=False,
+        help="show node properties",
+    )
     parser.add_option(
-        "-a", "--all",
-        action="store_true", dest="all", default=False,
-        help="show jobs, node properties, notes, and type")
+        "-a",
+        "--all",
+        action="store_true",
+        dest="all",
+        default=False,
+        help="show jobs, node properties, notes, and type",
+    )
     parser.add_option(
-        "-N", "--notes",
-        action="store_true", dest="notes", default=False,
-        help="show node notes")
+        "-N",
+        "--notes",
+        action="store_true",
+        dest="notes",
+        default=False,
+        help="show node notes",
+    )
     parser.add_option(
-        "-v", "--version",
-        action="store_true", dest="version", default=False,
-        help="Print version and exit.")
+        "-v",
+        "--version",
+        action="store_true",
+        dest="version",
+        default=False,
+        help="Print version and exit.",
+    )
     parser.add_option(
-        "-s", "--state",
-        dest="state", default=None,
-        help="Filter nodes by state. Valid state characters are F (free), " +
-             "O (offline), D (down), R (reserve), E (job-exclusive), " +
-             "S (job-sharing), B (busy), T (time-shared), and " +
-             "U (state-unknown).")
+        "-s",
+        "--state",
+        dest="state",
+        default=None,
+        help="Filter nodes by state. Valid state characters are F (free), "
+        + "O (offline), D (down), R (reserve), E (job-exclusive), "
+        + "S (job-sharing), B (busy), T (time-shared), and "
+        + "U (state-unknown).",
+    )
     parser.add_option(
-        "-x", "--exclusive",
-        action="store_true", dest="exclusive", default=False,
-        help="When specifying the state, use exclusive matching.")
+        "-x",
+        "--exclusive",
+        action="store_true",
+        dest="exclusive",
+        default=False,
+        help="When specifying the state, use exclusive matching.",
+    )
     parser.add_option(
-        "-X", "--xmlfile",
-        dest="xmlfile", default=None,
-        help="Use an XML file containing the pbsnodes output instead of " +
-             "pbsnodes.")
+        "-X",
+        "--xmlfile",
+        dest="xmlfile",
+        default=None,
+        help="Use an XML file containing the pbsnodes output instead of " + "pbsnodes.",
+    )
 
     (options, args) = parser.parse_args()
 
     if options.version:
-        print "qhost version", VERSION
+        print(f"qhost version {VERSION}")
         sys.exit(0)
 
     if options.all:
@@ -101,13 +141,13 @@ def run(options):
         pbsnodes = qhost.Pbsnodes("pbsnodes")
         xml = pbsnodes.execute()
         if xml is None:
-            print pbsnodes.error()
+            print(pbsnodes.error())
             sys.exit(1)
     else:
         try:
-            xml = open(options.xmlfile, 'r').read()
-        except IOError, e:
-            print e
+            xml = open(options.xmlfile, "r").read()
+        except IOError as e:
+            print(e)
             sys.exit(1)
 
     qp = qhost.Parser(xml)
@@ -124,13 +164,14 @@ def run(options):
         showjobs=options.jobs,
         showprops=options.properties,
         showtype=options.ntype,
-        shownote=options.notes
+        shownote=options.notes,
     )
     display.list(nodelist)
 
 
 def main():
     run(get_options())
+
 
 if __name__ == "__main__":
     main()

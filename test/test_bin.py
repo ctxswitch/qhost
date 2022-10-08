@@ -14,7 +14,7 @@ class TestBin(unittest.TestCase):
         expected = open(
             os.path.join(top, 'test', 'output', 'output_00.txt')
         ).read()
-        self.assertEquals(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_longer_run(self):
         top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
@@ -27,7 +27,7 @@ class TestBin(unittest.TestCase):
         expected = open(
             os.path.join(top, 'test', 'output', 'output_04_4.txt')
         ).read()
-        self.assertEquals(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_filter_by_state(self):
         top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
@@ -41,7 +41,7 @@ class TestBin(unittest.TestCase):
         expected = open(
             os.path.join(top, 'test', 'output', 'output_04_1.txt')
         ).read()
-        self.assertEquals(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_filter_by_state_ODE(self):
         '''
@@ -58,7 +58,7 @@ class TestBin(unittest.TestCase):
         expected = open(
             os.path.join(top, 'test', 'output', 'output_05.txt')
         ).read()
-        self.assertEquals(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_filter_by_state_and_node(self):
         top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
@@ -73,7 +73,7 @@ class TestBin(unittest.TestCase):
         expected = open(
             os.path.join(top, 'test', 'output', 'output_04_2.txt')
         ).read()
-        self.assertEquals(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_filter_by_node(self):
         top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
@@ -87,7 +87,7 @@ class TestBin(unittest.TestCase):
         expected = open(
             os.path.join(top, 'test', 'output', 'output_04_3.txt')
         ).read()
-        self.assertEquals(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_filter_by_jobid(self):
         top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
@@ -101,7 +101,7 @@ class TestBin(unittest.TestCase):
         expected = open(
             os.path.join(top, 'test', 'output', 'output_04_5.txt')
         ).read()
-        self.assertEquals(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_job_note_notification(self):
         top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
@@ -114,7 +114,7 @@ class TestBin(unittest.TestCase):
         expected = open(
             os.path.join(top, 'test', 'output', 'output_06_1.txt')
         ).read()
-        self.assertEquals(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_job_note_display(self):
         top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
@@ -128,7 +128,7 @@ class TestBin(unittest.TestCase):
         expected = open(
             os.path.join(top, 'test', 'output', 'output_06_2.txt')
         ).read()
-        self.assertEquals(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_any_state_display(self):
         top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
@@ -142,7 +142,7 @@ class TestBin(unittest.TestCase):
         expected = open(
             os.path.join(top, 'test', 'output', 'output_07_1.txt')
         ).read()
-        self.assertEquals(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_exclusive_state_display(self):
         top = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
@@ -156,4 +156,4 @@ class TestBin(unittest.TestCase):
         expected = open(
             os.path.join(top, 'test', 'output', 'output_07_2.txt')
         ).read()
-        self.assertEquals(actual, expected)
+        self.assertEqual(actual, expected)

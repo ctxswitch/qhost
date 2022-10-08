@@ -43,7 +43,7 @@ class Node:
         return self.name
 
     def from_hash(self, attrs):
-        for attr, value in attrs.iteritems():
+        for attr, value in list(attrs.items()):
             setattr(self, attr, value)
 
     def has_job(self, jobid):

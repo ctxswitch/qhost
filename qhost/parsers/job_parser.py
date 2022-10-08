@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from base import Base
+from .base import Base
 
 
 class JobParser(Base):
@@ -22,5 +22,5 @@ class JobParser(Base):
 
     def convert(self, value):
         jobs = value.split(',')
-        mapped_jobs = map(lambda x: x.split('/')[1].split('.')[0], jobs)
+        mapped_jobs = [x.split('/')[1].split('.')[0] for x in jobs]
         return (set(mapped_jobs), len(jobs))

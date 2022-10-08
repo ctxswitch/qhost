@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import sys
 import os
 import glob
@@ -10,7 +10,7 @@ def suite(loader):
     suite = unittest.TestSuite()
     for file in glob.glob("test_*.py"):
         name = file.split('.')[0]
-        camelcase = ''.join(map(lambda x: x.capitalize(), name.split('_')))
+        camelcase = ''.join([x.capitalize() for x in name.split('_')])
         tests = loader.loadTestsFromName("%s.%s" % (name, camelcase))
         suite.addTests(tests)
     return suite

@@ -14,12 +14,12 @@
 import xml.dom.minidom
 from qhost import Node
 from qhost import NodeList
-from constants import STATES
-from parsers import StringParser
-from parsers import IntParser
-from parsers import StateParser
-from parsers import JobParser
-from parsers import StatusParser
+from .constants import STATES
+from .parsers import StringParser
+from .parsers import IntParser
+from .parsers import StateParser
+from .parsers import JobParser
+from .parsers import StatusParser
 
 
 class Parser:
@@ -51,7 +51,7 @@ class Parser:
         n.ntype = StringParser(node, "ntype").parse()
         n.state = StateParser(node, "state").parse()
         n.jobs, n.slots = JobParser(node, "jobs").parse()
-        n.note = StringParser(node, "note", default='').parse()
+        n.note = StringParser(node, "note", default="").parse()
 
         status = StatusParser(node, "status").parse()
         n.from_hash(status)

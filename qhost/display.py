@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from constants import STATE_CHARS, STATE_COLORS
-from color import Color
+from .constants import STATE_CHARS, STATE_COLORS
+from .color import Color
 
 
 class Display:
@@ -33,20 +33,20 @@ class Display:
         self.shownote = shownote
 
     def list(self, nodelist):
-        print self.header()
+        print(self.header())
         for node in nodelist:
             self.display_node(node)
 
     def display_node(self, node):
-        print self.nodeline(node)
+        print(self.nodeline(node))
         if self.showprops and len(node.properties) > 0:
-            print self.proplines(node)
+            print(self.proplines(node))
         if self.showtype and len(node.ntype) > 0:
-            print self.typelines(node)
+            print(self.typelines(node))
         if self.showjobs and len(node.jobs) > 0:
-            print self.joblines(node)
+            print(self.joblines(node))
         if self.shownote and node.has_note():
-            print self.notelines(node)
+            print(self.notelines(node))
 
     def header(self):
         line = "%-17s  %-7s %-3s %-3s %-8s %-8s %-4s %-4s %-6s  %-8s\n" % (
