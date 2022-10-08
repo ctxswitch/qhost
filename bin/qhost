@@ -13,13 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import sys
 from optparse import OptionParser
-
-lib_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")
-if lib_path not in sys.path:
-    sys.path.insert(0, lib_path)
 import qhost
 from qhost.constants import VERSION
 
@@ -113,7 +108,8 @@ def get_options():
         "--xmlfile",
         dest="xmlfile",
         default=None,
-        help="Use an XML file containing the pbsnodes output instead of " + "pbsnodes.",
+        help="Use an XML file containing the pbsnodes output instead of " +
+        "pbsnodes.",
     )
 
     (options, args) = parser.parse_args()
