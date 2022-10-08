@@ -24,4 +24,4 @@ jobs:
           if [ -f requirements3.txt ]; then pip install -r requirements3.txt; fi
       - name: Test with pytest
         run: |
-          pytest
+          PYTHONPATH="." pytest -o console_output_style=classic

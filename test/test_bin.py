@@ -1,6 +1,6 @@
 import unittest
-import sys
 import os
+
 
 class TestBin(unittest.TestCase):
     def test_run(self):

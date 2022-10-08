@@ -12,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from qhost.constants import VERSION
 from distutils.core import setup
 
 import os
@@ -19,7 +20,6 @@ import sys
 lib_path = os.path.join(os.path.dirname(os.path.abspath(__file__)))
 if lib_path not in sys.path:
     sys.path.insert(0, lib_path)
-from qhost.constants import VERSION
 
 setup(
     name='qhost',

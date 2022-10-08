@@ -1,9 +1,7 @@
 import unittest
-import sys
-import os
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../'))
 
 from qhost import Display
+
 
 class TestDisplay(unittest.TestCase):
     def setUp(self):
@@ -46,6 +44,7 @@ class TestDisplay(unittest.TestCase):
         o = self.display.memory("2684354560", pad=4)
         self.assertEqual(len(o), 4)
         self.assertEqual(o, "2.5T")
+
 
 if __name__ == "__main__":
     unittest.main()
