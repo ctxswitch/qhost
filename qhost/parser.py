@@ -14,7 +14,6 @@
 import xml.dom.minidom
 from qhost import Node
 from qhost import NodeList
-from .constants import STATES
 from .parsers import StringParser
 from .parsers import IntParser
 from .parsers import StateParser
